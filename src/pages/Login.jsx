@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import '../styles/auth.css'
 
-const Login = ({ onFormSwitch, isRegistered }) => {
+const Login = ({ onFormSwitch, successMsg }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -61,14 +61,14 @@ const Login = ({ onFormSwitch, isRegistered }) => {
           Log In
         </button>
       </form>
-      {isRegistered ? (
+      {successMsg ? (
         <p
           style={{
             color: '#2ff46a',
             marginTop: '24px',
           }}
         >
-          Welcome to the community! Login to get started.
+          {successMsg}
         </p>
       ) : null}
       {errorMsg ? (
@@ -90,7 +90,7 @@ const Login = ({ onFormSwitch, isRegistered }) => {
 
 Login.propTypes = {
   onFormSwitch: PropTypes.func.isRequired,
-  isRegistered: PropTypes.bool,
+  successMsg: PropTypes.string,
 }
 
 export default Login

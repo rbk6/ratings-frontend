@@ -13,11 +13,11 @@ import './App.css'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login')
-  const [isRegistered, setIsRegistered] = useState(false)
+  const [successMsg, setSuccessMsg] = useState('')
 
-  const toggleForm = (formName, newUserStatus = false) => {
+  const toggleForm = (formName, msg) => {
     setCurrentForm(formName)
-    setIsRegistered(newUserStatus)
+    setSuccessMsg(msg)
   }
 
   return (
@@ -25,14 +25,18 @@ function App() {
       <Router>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route element={<Home />} path="/" exact />
+            <Route
+              element={<Home logoutMsg={setSuccessMsg} />}
+              path="/"
+              exact
+            />
           </Route>
           <Route
             element={
               sessionStorage.getItem('rate') ? (
                 <Navigate to="/" />
               ) : currentForm === 'login' ? (
-                <Login onFormSwitch={toggleForm} isRegistered={isRegistered} />
+                <Login onFormSwitch={toggleForm} successMsg={successMsg} />
               ) : (
                 <Register onFormSwitch={toggleForm} />
               )

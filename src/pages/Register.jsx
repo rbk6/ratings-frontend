@@ -58,7 +58,7 @@ const Register = ({ onFormSwitch }) => {
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, form)
         console.log(res.data)
-        onFormSwitch('login', true)
+        onFormSwitch('login', 'Welcome to the community! Login to get started.')
       } catch (err) {
         setErrorMsg(err.response.data.msg || err.response.data || err)
       }
