@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import '../styles/auth.css'
 
 const Login = ({ onFormSwitch }) => {
   const apiUrl = import.meta.env.VITE_API_URL
-
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -26,9 +27,10 @@ const Login = ({ onFormSwitch }) => {
     setErrorMsg('')
     try {
       const res = await axios.post(`${apiUrl}/auth/login`, form)
-      console.log(res.data)
+      sessionStorage.setItem('rate', res.data.accessToken)
+      navigate('/')
     } catch (err) {
-      setErrorMsg(err.response.data.msg || err.response.data)
+      setErrorMsg(err.response.data.msg || err.response.data || err)
     }
   }
 
