@@ -13,9 +13,11 @@ import './App.css'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login')
+  const [isRegistered, setIsRegistered] = useState(false)
 
-  const toggleForm = (formName) => {
+  const toggleForm = (formName, newUserStatus = false) => {
     setCurrentForm(formName)
+    setIsRegistered(newUserStatus)
   }
 
   return (
@@ -30,7 +32,7 @@ function App() {
               sessionStorage.getItem('rate') ? (
                 <Navigate to="/" />
               ) : currentForm === 'login' ? (
-                <Login onFormSwitch={toggleForm} />
+                <Login onFormSwitch={toggleForm} isRegistered={isRegistered} />
               ) : (
                 <Register onFormSwitch={toggleForm} />
               )

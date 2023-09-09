@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import PropTypes from 'prop-types' // Import PropTypes
+import PropTypes from 'prop-types'
+import axios from 'axios'
+import isEmail from 'email-validator'
 import '../styles/auth.css'
 
 const Register = ({ onFormSwitch }) => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -11,19 +14,55 @@ const Register = ({ onFormSwitch }) => {
     confirmPassword: '',
   })
 
+  const [errorMsg, setErrorMsg] = useState('')
+
   const onFieldUpdate = (e) => {
     const { id, value } = e.target
-    const nextFormState = {
-      ...form,
+    setForm((prevForm) => ({
+      ...prevForm,
       [id]: value,
-    }
-
-    setForm(nextFormState)
+    }))
   }
 
-  const handleSubmit = (e) => {
+  const validateForm = async () => {
+    const validNameRegex = /^[A-Za-z\s'-]+$/
+    if (!validNameRegex.test(form.name))
+      return (
+        `Name can only include letters (a-z), spaces, hyphens (-), and ` +
+        `apostrophes (').`
+      )
+
+    if (!isEmail.validate(form.email))
+      return 'Email address is invalid. Please enter a valid email.'
+
+    const validUsernameRegex = /^[a-zA-Z0-9-]+$/
+    if (form.username.length < 4 || form.username.length > 27)
+      return 'Username must be between 4 and 26 characters.'
+    else if (!validUsernameRegex.test(form.username))
+      return (
+        'Username can only include letters (a-z), numbers (0-9), and' +
+        ' hyphens (-).'
+      )
+
+    if (form.password.length < 8)
+      return 'Password must be at least 8 characters. '
+
+    return ''
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert(JSON.stringify(form, null, 2))
+    setErrorMsg('')
+    const validationError = await validateForm()
+    if (!validationError) {
+      try {
+        const res = await axios.post(`${apiUrl}/auth/register`, form)
+        console.log(res.data)
+        onFormSwitch('login', true)
+      } catch (err) {
+        setErrorMsg(err.response.data.msg || err.response.data || err)
+      }
+    } else setErrorMsg(validationError)
   }
 
   return (
@@ -88,6 +127,16 @@ const Register = ({ onFormSwitch }) => {
           Create Account
         </button>
       </form>
+      {errorMsg ? (
+        <p
+          style={{
+            color: '#f42f2f',
+            marginTop: '24px',
+          }}
+        >
+          {errorMsg}
+        </p>
+      ) : null}
       <button className="link-btn" onClick={() => onFormSwitch('login')}>
         Already have an account? Log in here.
       </button>
