@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import isEmail from 'email-validator'
 import '../styles/auth.css'
+import eyerateType from '../assets/eyerate-logo-type.png'
 
 const Register = ({ onFormSwitch }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -58,7 +59,10 @@ const Register = ({ onFormSwitch }) => {
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, form)
         console.log(res.data)
-        onFormSwitch('login', 'Welcome to the community! Login to get started.')
+        onFormSwitch(
+          'login',
+          'Welcome to the community! Log in to get started.'
+        )
       } catch (err) {
         setErrorMsg(err.response.data.msg || err.response.data || err)
       }
@@ -67,7 +71,15 @@ const Register = ({ onFormSwitch }) => {
 
   return (
     <div className="auth-container register-container">
-      <h1 style={{ marginBottom: '1rem' }}>Let&apos;s Get Popping! 🍿</h1>
+      <img
+        src={eyerateType}
+        style={{
+          filter: 'drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.50))',
+          marginBottom: '2.5rem',
+          width: '75%',
+          alignSelf: 'center',
+        }}
+      />{' '}
       <form className="auth-form" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
         <input
@@ -75,6 +87,7 @@ const Register = ({ onFormSwitch }) => {
           onChange={(e) => onFieldUpdate(e)}
           type="text"
           id="name"
+          placeholder="Name"
         />
         <label htmlFor="email">Email</label>
         <input
@@ -82,6 +95,7 @@ const Register = ({ onFormSwitch }) => {
           onChange={onFieldUpdate}
           type="text"
           id="email"
+          placeholder="Email"
         />
         <label htmlFor="username">Username</label>
         <input
@@ -89,6 +103,7 @@ const Register = ({ onFormSwitch }) => {
           onChange={onFieldUpdate}
           type="text"
           id="username"
+          placeholder="Username"
         />
         <label htmlFor="password">Password</label>
         <input
@@ -96,6 +111,7 @@ const Register = ({ onFormSwitch }) => {
           onChange={onFieldUpdate}
           type="password"
           id="password"
+          placeholder="Password"
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
@@ -103,6 +119,7 @@ const Register = ({ onFormSwitch }) => {
           onChange={onFieldUpdate}
           type="password"
           id="confirmPassword"
+          placeholder="Confirm Password"
         />
         {form.password.length > 0 || form.confirmPassword.length > 0 ? (
           form.password === form.confirmPassword ? (
