@@ -20,7 +20,9 @@ form {
   min-width: 100%;
 }
 
-span {
+span,
+input,
+button {
   font-size: 18px;
 }
 

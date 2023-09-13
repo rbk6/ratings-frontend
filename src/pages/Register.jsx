@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import isEmail from 'email-validator'
 import '../styles/auth.css'
-import eyerateType from '../assets/eyerate-logo-type.png'
+import slatelistTypeDark from '../assets/slatelist-type-dark.png'
 
 const Register = ({ onFormSwitch }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -72,14 +72,14 @@ const Register = ({ onFormSwitch }) => {
   return (
     <div className="auth-container register-container">
       <img
-        src={eyerateType}
+        src={slatelistTypeDark}
         style={{
           filter: 'drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.50))',
-          marginBottom: '2.5rem',
           width: '75%',
+          marginBottom: '2.5rem',
           alignSelf: 'center',
         }}
-      />{' '}
+      />
       <form className="auth-form" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
         <input

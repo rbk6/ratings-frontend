@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import '../styles/auth.css'
-import eyerateType from '../assets/eyerate-logo-type.png'
+import slatelistTypeDark from '../assets/slatelist-type-dark.png'
 
 const Login = ({ onFormSwitch, successMsg }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -38,12 +38,12 @@ const Login = ({ onFormSwitch, successMsg }) => {
   return (
     <div className="auth-container">
       <img
-        src={eyerateType}
+        src={slatelistTypeDark}
         style={{
           filter: 'drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.50))',
-          marginBottom: '2.5rem',
           width: '75%',
           alignSelf: 'center',
+          marginBottom: '2.5rem',
         }}
       />
       <form className="auth-form" onSubmit={handleSubmit}>
