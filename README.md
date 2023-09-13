@@ -1,4 +1,7 @@
-Welcome to the EyeRate frontend repository! This repository contains code for the frontend of the EyeRate web application. The frontend is responsible for providing users with an interface to manage their ratings, watchlists, and interactions with external APIs.
+<img src="./src/assets/slatelist-type-dark.png" alt="SlateList" width=300 style="padding-right: 15px" height=auto />
+<img src="./src/assets/slatelist-logo.png" alt="SlateList" width=75 height=auto />
+
+Welcome to the SlateList frontend repository! This repository contains code for the frontend of the SlateList web application. The frontend is responsible for providing users with an interface to manage their ratings, watchlists, and interactions with external APIs.
 
 ## Technologies Used
 
