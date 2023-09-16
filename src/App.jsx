@@ -5,10 +5,13 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom'
-import Home from './pages/Home'
+import Layout from './components/Layout'
 import Login from './pages/Login'
-import Register from './pages/Register'
+import Movies from './pages/Movies'
 import PrivateRoute from './utils/PrivateRoute'
+import Profile from './pages/Profile'
+import Register from './pages/Register'
+import Shows from './pages/Shows'
 import './App.css'
 
 function App() {
@@ -24,13 +27,6 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route element={<PrivateRoute />}>
-            <Route
-              element={<Home logoutMsg={setSuccessMsg} />}
-              path="/"
-              exact
-            />
-          </Route>
           <Route
             element={
               sessionStorage.getItem('rate') ? (
@@ -43,6 +39,13 @@ function App() {
             }
             path="/login"
           />
+          <Route element={<Layout logoutMsg={setSuccessMsg} />}>
+            <Route element={<PrivateRoute />}>
+              <Route element={<Movies />} path="/" exact />
+              <Route element={<Shows />} path="/shows" exact />
+              <Route element={<Profile />} path="/profile" exact />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </div>
