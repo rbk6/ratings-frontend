@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import slatelistLogo from '../assets/slatelist-logo.png'
 import slatelistTypeDark from '../assets/slatelist-type-dark.png'
 import '../styles/nav.css'
@@ -18,25 +17,32 @@ const NavBar = ({ links, logoutMsg }) => {
       <nav className="navbar">
         <ul>
           <li className="navbar-left">
-            <img
-              src={slatelistLogo}
-              style={{
-                width: '50px',
-                paddingLeft: '24px',
-              }}
-            />
-            <img
-              src={slatelistTypeDark}
-              style={{
-                filter: 'drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.50))',
-                width: '150px',
-                paddingLeft: '12px',
-              }}
-            />
+            <a
+              href="https://www.github.com/rbk6"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <img
+                src={slatelistLogo}
+                style={{
+                  width: '40px',
+                  paddingLeft: '24px',
+                }}
+              />
+              <img
+                src={slatelistTypeDark}
+                style={{
+                  filter: 'drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.50))',
+                  width: '125px',
+                  paddingLeft: '12px',
+                }}
+              />
+            </a>
           </li>
           <li className="navbar-center">
             {links.map((link) => (
-              <NavLink to={link.to} key={link.to}>
+              <NavLink className="link" to={link.to} key={link.to}>
                 {link.label}
               </NavLink>
             ))}

@@ -11,7 +11,7 @@ function Layout({ logoutMsg }) {
   return (
     <div>
       <Navbar links={navLinks} logoutMsg={logoutMsg} />
-      <div style={{ marginTop: '80px' }}>
+      <div style={{ marginTop: '100px' }}>
         <Outlet />
       </div>
     </div>

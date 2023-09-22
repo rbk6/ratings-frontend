@@ -1,3 +1,7 @@
+.App {
+  align-items: center !important;
+}
+
 .auth-container,
 .auth-form {
   display: flex;
@@ -63,9 +67,9 @@ button[type='submit']:hover {
     border-radius: 0;
   }
   input {
-    margin-bottom: 0.5rem; /* Adjust margin for smaller screens */
+    margin-bottom: 0.5rem;
   }
   button {
-    margin-top: 1rem; /* Adjust margin for smaller screens */
+    margin-top: 1rem;
   }
 }
