@@ -40,10 +40,22 @@ function App() {
             path="/login"
           />
           <Route element={<Layout logoutMsg={setSuccessMsg} />}>
-            <Route element={<PrivateRoute />}>
-              <Route element={<Movies />} path="/" exact />
-              <Route element={<Shows />} path="/shows" exact />
-              <Route element={<Profile />} path="/profile" exact />
+            <Route element={<PrivateRoute logoutMsg={setSuccessMsg} />}>
+              <Route
+                element={<Movies logoutMsg={setSuccessMsg} />}
+                path="/"
+                exact
+              />
+              <Route
+                element={<Shows logoutMsg={setSuccessMsg} />}
+                path="/shows"
+                exact
+              />
+              <Route
+                element={<Profile logoutMsg={setSuccessMsg} />}
+                path="/profile"
+                exact
+              />
             </Route>
           </Route>
         </Routes>
