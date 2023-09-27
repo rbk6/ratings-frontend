@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom'
 
 function Layout({ logoutMsg }) {
   const navLinks = [
-    { to: '/', label: 'Movies' },
-    { to: '/shows', label: 'Shows' },
-    { to: '/profile', label: 'Profile' },
+    { to: '/', label: 'Movies', icon: 'LocalMovies' },
+    { to: '/shows', label: 'Shows', icon: 'Tv' },
+    { to: '/profile', label: 'Profile', icon: 'Person' },
   ]
   return (
     <div>
