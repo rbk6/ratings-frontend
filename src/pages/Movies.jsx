@@ -51,7 +51,7 @@ const Movies = ({ logoutMsg }) => {
   return (
     <>
       {moviePreviews.data.results ? (
-        <Preview previews={moviePreviews.data.results} />
+        <Preview previews={moviePreviews.data.results} type={'movie'} />
       ) : (
         <p>Loading...</p>
       )}
