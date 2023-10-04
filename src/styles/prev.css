@@ -223,6 +223,10 @@ textarea {
     width: 80%;
   }
 
+  p {
+    width: 90%;
+  }
+
   textarea {
     height: 30vh;
   }

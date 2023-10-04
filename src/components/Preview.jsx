@@ -44,6 +44,7 @@ const Preview = ({ previews, type }) => {
         <RatingModal
           preview={selectedPreview}
           setRatingIsOpen={setRatingIsOpen}
+          type={type}
         />
       ) : null}
       <div className="preview-wrapper">

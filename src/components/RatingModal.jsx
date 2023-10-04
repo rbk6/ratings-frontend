@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import { useState } from 'react'
 import { Close } from '@mui/icons-material'
 
-const RatingModal = ({ preview, setRatingIsOpen }) => {
+const RatingModal = ({ preview, setRatingIsOpen, type }) => {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [form, setForm] = useState({
     title: preview.original_title || preview.name,
-    rating: '5',
+    user_rating: '5',
     content: '',
+    movie_id: null,
+    show_id: null,
   })
+
+  const [errorMsg, setErrorMsg] = useState('')
 
   const closeRating = () => {
     setForm({ title: '', content: '' })
@@ -24,7 +30,34 @@ const RatingModal = ({ preview, setRatingIsOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(form)
+    let updatedForm = { ...form }
+    if (type === 'movie') updatedForm = { ...updatedForm, movie_id: preview.id }
+    else updatedForm = { ...updatedForm, show_id: preview.id }
+    setForm(updatedForm)
+
+    try {
+      const res = await axios.post(`${apiUrl}/ratings`, updatedForm, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('rate')}`,
+        },
+      })
+
+      if (res.data.accessToken) {
+        console.log('updating token')
+        const updatedToken = res.data.accessToken
+        sessionStorage.setItem('rate', updatedToken)
+        const updatedRes = await axios.post(`${apiUrl}/ratings`, updatedForm, {
+          headers: {
+            Authorization: `Bearer ${updatedToken}`,
+          },
+        })
+        console.log(updatedRes)
+      } else {
+        console.log(res)
+      }
+    } catch (err) {
+      setErrorMsg(err.response.data.msg || err.response.data || err)
+    }
   }
 
   return (
@@ -51,7 +84,7 @@ const RatingModal = ({ preview, setRatingIsOpen }) => {
               />
             </div>
             <div className="form-field rating">
-              <label htmlFor="rating">Rating: {`${form.rating}`}</label>
+              <label htmlFor="rating">Rating: {`${form.user_rating}`}</label>
               <input
                 onChange={onFieldUpdate}
                 type="range"
@@ -59,7 +92,7 @@ const RatingModal = ({ preview, setRatingIsOpen }) => {
                 min="0.0"
                 step="0.1"
                 id="rating"
-                name="rating"
+                name="user_rating"
                 placeholder="0-5"
                 required
                 autoComplete="on"
@@ -77,6 +110,7 @@ const RatingModal = ({ preview, setRatingIsOpen }) => {
                 style={{ resize: 'none' }}
               />
             </div>
+            {errorMsg ? <p style={{ color: 'red' }}>{`${errorMsg}`}</p> : null}
             <button
               className="rating-btn"
               type="submit"
@@ -94,6 +128,7 @@ const RatingModal = ({ preview, setRatingIsOpen }) => {
 RatingModal.propTypes = {
   preview: PropTypes.object,
   setRatingIsOpen: PropTypes.func,
+  type: PropTypes.string,
 }
 
 export default RatingModal
