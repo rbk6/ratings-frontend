@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Preview from '../components/Preview'
+import Loading from '../components/Loading'
 
 const Shows = ({ logoutMsg }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -47,10 +48,10 @@ const Shows = ({ logoutMsg }) => {
 
   return (
     <>
-      {showPreviews ? (
+      {showPreviews.length > 0 ? (
         <Preview previews={showPreviews} type="show" />
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </>
   )

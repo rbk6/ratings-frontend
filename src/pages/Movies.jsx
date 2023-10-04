@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Preview from '../components/Preview'
+import Loading from '../components/Loading'
 
 const Movies = ({ logoutMsg }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -50,10 +51,10 @@ const Movies = ({ logoutMsg }) => {
 
   return (
     <>
-      {moviePreviews.data.results ? (
+      {moviePreviews.data.results.length > 0 ? (
         <Preview previews={moviePreviews.data.results} type={'movie'} />
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </>
   )
