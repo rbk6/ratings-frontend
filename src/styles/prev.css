@@ -70,3 +70,171 @@ h4 {
 .prev-btn:hover {
   background-color: #4f1ab9;
 }
+
+.modal-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.rating-box {
+  background-color: #21212b;
+  position: fixed;
+  top: 53.5%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  border-radius: 24px;
+}
+
+.rating-box h1 {
+  margin-bottom: 20px;
+  font-size: 64px;
+}
+
+.rating-box .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 1rem;
+}
+
+.close-icon {
+  font-size: 2rem !important;
+}
+
+.rating-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.rating-form label {
+  left: auto;
+  margin-top: -44px;
+  display: block;
+  font-size: 32px;
+}
+
+.rating-form input,
+.rating-form textarea {
+  margin: 0 0 1rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 24px;
+}
+
+.rating-form input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  background-color: #3b3b3b;
+  width: 15rem;
+}
+
+.rating-form input[type='range']::-webkit-slider-runnable-track {
+  background: #21212b;
+  height: 0.75rem;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -12px;
+  background-color: #6020dd;
+  height: 2.5rem;
+  width: 1rem;
+}
+
+.rating-form .form-field {
+  display: flex;
+}
+
+.form-field {
+  margin-top: 32px;
+}
+
+.title {
+  width: 60%;
+  margin-right: 2.5%;
+}
+
+.rating {
+  width: 25%;
+}
+
+.desc {
+  width: 87.5%;
+}
+
+textarea {
+  height: 20vh;
+  box-sizing: border-box;
+}
+
+.rating-btn {
+  width: 87.5%;
+}
+
+@media (max-width: 767px) {
+  .rating-form label {
+    margin-top: -36px;
+    font-size: 24px;
+  }
+
+  .rating-box {
+    width: 85%;
+    height: 80%;
+    top: 53.5%;
+    border-radius: 0;
+  }
+
+  .rating-box h1 {
+    margin: 12px 0 20px 0;
+    font-size: 32px;
+  }
+
+  .title,
+  .rating,
+  .desc,
+  .rating-btn {
+    width: 80%;
+  }
+
+  textarea {
+    height: 30vh;
+  }
+
+  .rating-box .close {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 1rem;
+    padding: 0;
+  }
+}

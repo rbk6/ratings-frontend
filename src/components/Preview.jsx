@@ -1,9 +1,43 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { Close } from '@mui/icons-material'
 import '../styles/prev.css'
 
 const Preview = ({ previews, type }) => {
   const [expandOverview, setExpandOverview] = useState([])
+  const [selectedPreview, setSelectedPreview] = useState(null)
+  const [ratingIsOpen, setRatingIsOpen] = useState(false)
+  const [form, setForm] = useState({
+    title: '',
+    rating: '',
+  })
+
+  const openRating = (preview) => {
+    setRatingIsOpen(true)
+    setSelectedPreview(preview)
+    setForm({
+      title: preview.original_title || preview.name,
+      rating: 5,
+    })
+  }
+
+  const closeRating = () => {
+    setRatingIsOpen(false)
+    setForm({ title: '' })
+  }
+
+  const onFieldUpdate = (e) => {
+    const { name, value } = e.target
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    console.log(selectedPreview.original_title || selectedPreview.name)
+  }
 
   const toggleOverview = (id) => {
     setExpandOverview((prevState) => ({
@@ -32,6 +66,66 @@ const Preview = ({ previews, type }) => {
 
   return (
     <div className="prev-container">
+      {ratingIsOpen ? (
+        <div className="modal-wrapper">
+          <div className="overlay"></div>
+          <div className="rating-box">
+            <h1>Create Rating</h1>
+            <button className="close" onClick={closeRating}>
+              <Close className="close-icon" />
+            </button>
+            <form className="rating-form" onSubmit={handleSubmit}>
+              <div className="form-field title">
+                <label htmlFor="title">Title:</label>
+                <input
+                  value={form.title}
+                  onChange={onFieldUpdate}
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Title"
+                  readOnly
+                  autoComplete="on"
+                />
+              </div>
+              <div className="form-field rating">
+                <label htmlFor="rating">Rating: {`${form.rating}`}</label>
+                <input
+                  onChange={onFieldUpdate}
+                  type="range"
+                  max="5.0"
+                  min="0.0"
+                  step="0.1"
+                  id="rating"
+                  name="rating"
+                  placeholder="0-5"
+                  required
+                  autoComplete="on"
+                />
+              </div>
+              <div className="form-field desc">
+                <label htmlFor="desc">Description:</label>
+                <textarea
+                  onChange={onFieldUpdate}
+                  type="text"
+                  id="desc"
+                  name="desc"
+                  placeholder="Share your thoughts..."
+                  autoComplete="on"
+                  style={{ resize: 'none' }}
+                />
+              </div>
+              <button
+                className="rating-btn"
+                type="submit"
+                onSubmit={handleSubmit}
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      ) : null}
       <div className="preview-wrapper">
         {previews.map((preview) => {
           const formattedDate = formatDate(
@@ -114,6 +208,7 @@ const Preview = ({ previews, type }) => {
                       borderTopLeftRadius: '12px',
                     }}
                     className="prev-btn"
+                    onClick={() => openRating(preview)}
                   >
                     Create Rating
                   </button>
