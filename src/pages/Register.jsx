@@ -64,7 +64,11 @@ const Register = ({ onFormSwitch }) => {
           'Welcome to the community! Log in to get started.'
         )
       } catch (err) {
-        setErrorMsg(err.response.data.msg || err.response.data || err)
+        if (err.response && err.response.data && err.response.data.msg)
+          setErrorMsg(err.response.data.msg)
+        else if (err.response && err.response.data)
+          setErrorMsg(err.response.data)
+        else setErrorMsg('An error occurred, please try again.')
       }
     } else setErrorMsg(validationError)
   }
