@@ -50,12 +50,12 @@ const Preview = ({ previews, type }) => {
       <div className="preview-wrapper">
         {previews.map((preview) => {
           const formattedDate = formatDate(
-            type === 'movie' ? preview.release_date : preview.premiered
+            type === 'movies' ? preview.release_date : preview.premiered
           )
-          let endDate = formatDate(type === 'show' ? preview.ended : null)
+          let endDate = formatDate(type === 'shows' ? preview.ended : null)
 
           let overviewFull =
-            type === 'movie' ? preview.overview : preview.summary
+            type === 'movies' ? preview.overview : preview.summary
           overviewFull = overviewFull.replace(/<\/p><p>/g, ' ')
           overviewFull = new DOMParser().parseFromString(
             overviewFull,
@@ -72,7 +72,7 @@ const Preview = ({ previews, type }) => {
                 className="image-container"
                 style={{
                   backgroundImage: `url(${
-                    type === 'movie'
+                    type === 'movies'
                       ? `https://image.tmdb.org/t/p/w500/${preview.poster_path}`
                       : preview.image.original
                   })`,
@@ -80,7 +80,7 @@ const Preview = ({ previews, type }) => {
               ></div>
               <div className="preview-info">
                 <h3>
-                  {type === 'movie' ? preview.original_title : preview.name}
+                  {type === 'movies' ? preview.original_title : preview.name}
                 </h3>
                 {preview.status ? (
                   preview.status === 'Ended' ? (
