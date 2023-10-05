@@ -4,7 +4,7 @@ import '../styles/prev.css'
 import RatingModal from '../components/RatingModal'
 
 const Preview = ({ previews, type }) => {
-  const [expandOverview, setExpandOverview] = useState([])
+  const [expandDesc, setExpandDesc] = useState([])
   const [selectedPreview, setSelectedPreview] = useState(null)
   const [ratingIsOpen, setRatingIsOpen] = useState(false)
 
@@ -13,8 +13,8 @@ const Preview = ({ previews, type }) => {
     setSelectedPreview(preview)
   }
 
-  const toggleOverview = (id) => {
-    setExpandOverview((prevState) => ({
+  const toggleDesc = (id) => {
+    setExpandDesc((prevState) => ({
       ...prevState,
       [id]: !prevState[id],
     }))
@@ -49,39 +49,28 @@ const Preview = ({ previews, type }) => {
       ) : null}
       <div className="preview-wrapper">
         {previews.map((preview) => {
-          const formattedDate = formatDate(
-            type === 'movies' ? preview.release_date : preview.premiered
-          )
-          let endDate = formatDate(type === 'shows' ? preview.ended : null)
+          const formattedDate = formatDate(preview.releaseDate)
+          let endDate = formatDate(preview.endDate)
 
-          let overviewFull =
-            type === 'movies' ? preview.overview : preview.summary
-          overviewFull = overviewFull.replace(/<\/p><p>/g, ' ')
-          overviewFull = new DOMParser().parseFromString(
-            overviewFull,
+          let descFull = new DOMParser().parseFromString(
+            preview.description.replace(/<\/p><p>/g, ' '),
             'text/html'
           ).body.textContent
 
-          const overview = formatDesc(overviewFull)
-          const shouldExpand = expandOverview[preview.id]
-          const displayOverview = shouldExpand ? overviewFull : overview
+          const description = formatDesc(descFull)
+          const shouldExpand = expandDesc[preview.id]
+          const displayDesc = shouldExpand ? descFull : description
 
           return (
             <div className="preview" key={preview.id} id={preview.id}>
               <div
                 className="image-container"
                 style={{
-                  backgroundImage: `url(${
-                    type === 'movies'
-                      ? `https://image.tmdb.org/t/p/w500/${preview.poster_path}`
-                      : preview.image.original
-                  })`,
+                  backgroundImage: `url(${preview.image})`,
                 }}
               ></div>
               <div className="preview-info">
-                <h3>
-                  {type === 'movies' ? preview.original_title : preview.name}
-                </h3>
+                <h3>{preview.title}</h3>
                 {preview.status ? (
                   preview.status === 'Ended' ? (
                     <h4
@@ -96,15 +85,15 @@ const Preview = ({ previews, type }) => {
                   <h4>{`Released ${formattedDate}`}</h4>
                 )}
                 <p>
-                  {displayOverview}
-                  {overviewFull.length > 70 && (
+                  {displayDesc}
+                  {descFull.length > 70 && (
                     <span>
                       <a
                         href="#"
                         className="prev-link"
                         onClick={(e) => {
                           e.preventDefault()
-                          toggleOverview(preview.id)
+                          toggleDesc(preview.id)
                         }}
                         style={{ marginLeft: '8px' }}
                       >

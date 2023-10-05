@@ -8,7 +8,7 @@ import Loading from '../components/Loading'
 const Media = ({ logoutMsg, type }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [page, setPage] = useState(1)
-  const [mediaPreviews, setMediaPreviews] = useState({ data: { results: [] } })
+  const [mediaPreviews, setMediaPreviews] = useState({ data: [] })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -23,7 +23,6 @@ const Media = ({ logoutMsg, type }) => {
         const token = sessionStorage.getItem('rate')
         const headers = { Authorization: `Bearer ${token}` }
         const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
-
         if (res.data.accessToken) {
           sessionStorage.setItem('rate', res.data.accessToken)
           const updatedRes = await axios.get(`${apiUrl}/${type}/${page}`, {
@@ -31,13 +30,9 @@ const Media = ({ logoutMsg, type }) => {
               Authorization: `Bearer ${res.data.accessToken}`,
             },
           })
-          type === 'movies'
-            ? setMediaPreviews(updatedRes.data)
-            : setMediaPreviews(updatedRes.data.data)
+          setMediaPreviews(updatedRes.data.data)
         } else {
-          type === 'movies'
-            ? setMediaPreviews(res.data)
-            : setMediaPreviews(res.data.data)
+          setMediaPreviews(res.data.data)
         }
       } catch (err) {
         if (err.message.includes('403')) handleLogout()
@@ -50,13 +45,7 @@ const Media = ({ logoutMsg, type }) => {
 
   return (
     <>
-      {type === 'movies' ? (
-        mediaPreviews.data.results.length > 0 ? (
-          <Preview previews={mediaPreviews.data.results} type={type} />
-        ) : (
-          <Loading />
-        )
-      ) : mediaPreviews.length > 0 ? (
+      {mediaPreviews.length > 0 ? (
         <Preview previews={mediaPreviews} type={type} />
       ) : (
         <Loading />
