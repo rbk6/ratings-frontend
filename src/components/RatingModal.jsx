@@ -6,7 +6,7 @@ import { Close } from '@mui/icons-material'
 const RatingModal = ({ preview, setRatingIsOpen, type }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [form, setForm] = useState({
-    title: preview.original_title || preview.name,
+    title: preview.title,
     user_rating: '5',
     content: '',
     movie_id: null,
@@ -14,6 +14,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
   })
 
   const [errorMsg, setErrorMsg] = useState('')
+  const [successMsg, setSuccessMsg] = useState('')
 
   const closeRating = () => {
     setForm({ title: '', content: '' })
@@ -34,7 +35,6 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
     if (type === 'movie') updatedForm = { ...updatedForm, movie_id: preview.id }
     else updatedForm = { ...updatedForm, show_id: preview.id }
     setForm(updatedForm)
-
     try {
       const res = await axios.post(`${apiUrl}/ratings`, updatedForm, {
         headers: {
@@ -55,6 +55,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
       } else {
         console.log(res)
       }
+      if (res.status === 201) setSuccessMsg('Rating created.')
     } catch (err) {
       setErrorMsg(err.response.data.msg || err.response.data || err)
     }
@@ -73,7 +74,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
             <div className="form-field title">
               <label htmlFor="title">Title:</label>
               <input
-                value={form.title}
+                value={preview.title}
                 onChange={onFieldUpdate}
                 type="text"
                 id="title"
@@ -110,7 +111,11 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
                 style={{ resize: 'none' }}
               />
             </div>
-            {errorMsg ? <p style={{ color: 'red' }}>{`${errorMsg}`}</p> : null}
+            {successMsg && !errorMsg ? (
+              <p style={{ color: '#2ff46a' }}>{successMsg}</p>
+            ) : errorMsg ? (
+              <p style={{ color: 'red' }}>{`${errorMsg}`}</p>
+            ) : null}
             <button
               className="rating-btn"
               type="submit"
