@@ -5,23 +5,16 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom'
+import Authentication from './pages/Authentication'
 import Layout from './components/Layout'
-import Login from './pages/Login'
 import Movies from './pages/Movies'
 import PrivateRoute from './utils/PrivateRoute'
 import Profile from './pages/Profile'
-import Register from './pages/Register'
 import Shows from './pages/Shows'
 import './App.css'
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login')
   const [successMsg, setSuccessMsg] = useState('')
-
-  const toggleForm = (formName, msg) => {
-    setCurrentForm(formName)
-    setSuccessMsg(msg)
-  }
 
   return (
     <div className="App">
@@ -31,10 +24,11 @@ function App() {
             element={
               sessionStorage.getItem('rate') ? (
                 <Navigate to="/" />
-              ) : currentForm === 'login' ? (
-                <Login onFormSwitch={toggleForm} successMsg={successMsg} />
               ) : (
-                <Register onFormSwitch={toggleForm} />
+                <Authentication
+                  setSuccessMsg={setSuccessMsg}
+                  successMsg={successMsg}
+                />
               )
             }
             path="/login"
