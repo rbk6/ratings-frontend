@@ -85,8 +85,8 @@ const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
 
   return (
     <form
-      className={`${style.form} ${
-        Object.keys(form).length === 2 ? style['login-form'] : ''
+      className={`${
+        Object.keys(form).length === 2 ? style['login-form'] : style['reg-form']
       }`}
       onSubmit={handleSubmit}
     >

@@ -1,63 +1,57 @@
 .wrapper,
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
 .wrapper {
-  width: 75vw;
   height: 100vh;
 }
 
 .container {
-  justify-content: center;
   width: 700px;
   height: 600px;
-  background-color: var(--card-bg-color);
   border-radius: 24px;
+  background-color: var(--card-bg-color);
 }
 
 label {
-  left: -9999px;
   position: absolute;
+  left: -9999px;
 }
 
 input {
-  font-size: 18px;
   width: 500px;
-  margin: 0 0 12px 0;
   padding: 0.75em;
-  border: none;
-  border-radius: 10px;
   background-color: var(--input-bg-color);
 }
 
 button {
-  font-size: 18px;
   width: 525px;
-  margin: 0 0 12px 0;
-  border: none;
-  padding: 0.5em;
-  border-radius: 10px;
   cursor: pointer;
   background-color: var(--button-bg-color);
 }
 
+input,
+button {
+  margin-bottom: 12px;
+  padding: 0.75em;
+  border-radius: 10px;
+  border: none;
+  font-size: 18px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
 .toggle-btn {
+  margin-bottom: 48px;
   background-color: transparent;
   text-decoration-line: underline;
-  margin-bottom: 48px;
 }
 
 .toggle-btn.login {
   margin-bottom: 164px;
-}
-
-form {
-  width: 100%;
-  padding: 0;
 }
 
 .logo {
@@ -69,8 +63,8 @@ form {
 }
 
 .logo-login {
-  transform: scale(1.5);
   margin-top: 128px;
+  transform: scale(1.5);
 }
 
 .login-form {
@@ -80,29 +74,33 @@ form {
 @media (max-width: 767px) {
   .wrapper {
     width: 100vw;
+    background-color: var(--card-bg-color);
   }
 
   .container {
     width: 100%;
     height: 550px;
-    border-radius: 0;
   }
 
   input {
     width: 300px;
     margin: 0 0 12px 0;
-    padding: 0.75em;
   }
 
   button {
-    width: 325px;
+    width: 320px;
     margin: 0 0 12px 0;
-    padding: 0.5em;
+  }
+
+  input,
+  button {
+    font-size: 16px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
   }
 
   .toggle-btn {
-    margin-bottom: 48px;
     width: 100%;
+    margin-bottom: 48px;
   }
 
   .toggle-btn.login {
@@ -111,16 +109,19 @@ form {
 
   .logo {
     width: 250px;
-    margin: 32px 0 auto 0;
-    padding: 2em;
+    margin: 45px 0 auto 0;
   }
 
   .logo-login {
-    transform: scale(1.3);
     margin-top: 132px;
+    transform: scale(1.3);
   }
 
   .login-form {
-    margin-top: 16px;
+    margin-top: 4px;
+  }
+
+  .reg-form {
+    margin-top: -8px;
   }
 }
