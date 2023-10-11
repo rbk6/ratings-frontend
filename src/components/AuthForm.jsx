@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import isEmail from 'email-validator'
+import style from '../pages/Authentication/Authentication.module.css'
 
 const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
   const apiUrl = import.meta.env.VITE_API_URL
@@ -83,15 +84,27 @@ const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
   }
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit}>
+    <form
+      className={`${style.form} ${
+        Object.keys(form).length === 2 ? style['login-form'] : ''
+      }`}
+      onSubmit={handleSubmit}
+    >
       {fields.map((field, index) => {
         const label = createLabel(field.name)
+        const isFirst = index === 0
         return (
           <div key={index}>
             <label htmlFor={field.name}>{label}</label>
             <input
+              className={
+                Object.keys(form).length === 2 && field.name === 'password'
+                  ? style['login-btn']
+                  : ''
+              }
               value={form[field.name]}
               onChange={onFieldUpdate}
+              autoFocus={isFirst}
               type={field.type}
               name={field.name}
               id={field.name}
@@ -109,8 +122,8 @@ const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
         ) : (
           <span style={{ color: '#f42f2f' }}>Passwords do not match.</span>
         ))}
-      <button className="submit" type="submit">
-        {form.confirmPassword > 2 ? 'Create Account' : 'Log In'}
+      <button type="submit">
+        {Object.keys(form).length > 2 ? 'Create Account' : 'Log In'}
       </button>
     </form>
   )

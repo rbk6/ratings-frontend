@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom'
-import Authentication from './pages/Authentication'
+import Authentication from './pages/Authentication/Authentication'
 import Layout from './components/Layout'
 import Movies from './pages/Movies'
 import PrivateRoute from './utils/PrivateRoute'
