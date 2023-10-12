@@ -4,7 +4,8 @@
   --bg-color: #0b0a08;
   --card-bg-color: #12100e;
   --input-bg-color: #2b2621;
-  --button-bg-color: var(--primary-color);
+  --hyperlink-color: #723cdf;
+  --button-bg-hover-color: #43169c;
 
   font-family: 'Gantari', sans-serif;
   color-scheme: light dark;

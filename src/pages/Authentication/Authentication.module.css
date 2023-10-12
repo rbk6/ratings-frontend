@@ -31,7 +31,12 @@ input {
 button {
   width: 525px;
   cursor: pointer;
-  background-color: var(--button-bg-color);
+  background-color: var(--primary-color);
+}
+
+button[type='submit']:hover {
+  background-color: var(--button-bg-hover-color);
+  transition: 200ms ease-in-out;
 }
 
 input,
@@ -48,6 +53,12 @@ button {
   margin-bottom: 48px;
   background-color: transparent;
   text-decoration-line: underline;
+}
+
+.toggle-btn:hover {
+  color: var(--hyperlink-color);
+  transform: scaleX(1.005);
+  transition: 200ms ease-in-out;
 }
 
 .toggle-btn.login {
