@@ -20,8 +20,8 @@ const Authentication = () => {
   }
 
   return (
-    <div className={style.wrapper}>
-      <div className={style.container}>
+    <div className={`${style['auth-wrapper']}`}>
+      <div className={`${style['auth-container']}`}>
         <img
           className={`${style.logo} ${
             currentForm === 'login' ? style['logo-login'] : ''
