@@ -1,0 +1,134 @@
+.navbar,
+.navbar ul,
+.navbar .start,
+.navbar button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar {
+  top: 0;
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  box-sizing: border-box;
+  background-color: var(--bg-color);
+}
+
+.navbar ul {
+  width: 100%;
+  list-style: none;
+}
+
+.start-menu {
+  top: 60px;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: fixed;
+  background-color: var(--bg-color);
+  transition: left 300ms ease-in-out;
+}
+
+.start-menu .navlink {
+  margin: 0 12px 0 12px;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+}
+
+.start-menu .navlink:hover,
+.start-menu .current {
+  background-color: var(--button-bg-hover-color);
+  transition: background-color 200ms ease-in-out;
+}
+
+.start-menu .current:hover {
+  background-color: #6c23ff;
+  transition: background-color 200ms ease-in-out;
+}
+
+.start-menu hr {
+  width: 240px;
+  height: 1px;
+  margin: 12px 0 12px 0;
+  border: none;
+  background-color: #3c3c3c;
+}
+
+.info hr {
+  margin: 4px 0 4px 0;
+}
+
+.start-menu .icon {
+  margin-right: 24px;
+  font-size: 24px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.start-menu .info {
+  height: 225px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.info p {
+  margin-left: 12px;
+  line-height: 1.5;
+}
+
+.info a {
+  color: var(--hyperlink-color);
+  text-decoration: none;
+}
+
+.info a:hover {
+  text-decoration: underline;
+}
+
+.open {
+  left: 0;
+}
+
+.navbar .end {
+  margin-left: auto;
+}
+
+.navbar .logo {
+  width: 125px;
+  margin-left: 12px;
+}
+
+.navbar button {
+  padding: 10px;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.navbar button svg {
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.navbar button:hover {
+  background-color: var(--button-bg-hover-color);
+  transition: background-color 200ms ease-in-out;
+}
+
+.navbar .profile {
+  color: #fff;
+  transform: scale(1.4);
+}
