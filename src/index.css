@@ -19,3 +19,29 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #43169c;
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cacaca;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #201339;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #43169c var(--bg-color);
+}
