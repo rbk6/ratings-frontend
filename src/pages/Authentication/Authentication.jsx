@@ -8,9 +8,8 @@ const Message = ({ message, color }) => {
   return message ? <p style={{ color, marginTop: '24px' }}>{message}</p> : null
 }
 
-const Authentication = () => {
+const Authentication = ({ successMsg, setSuccessMsg }) => {
   const [errorMsg, setErrorMsg] = useState('')
-  const [successMsg, setSuccessMsg] = useState('')
   const [currentForm, setCurrentForm] = useState('login')
 
   const toggleForm = (formName) => {
@@ -82,6 +81,11 @@ const Authentication = () => {
 Message.propTypes = {
   message: PropTypes.string,
   color: PropTypes.string,
+}
+
+Authentication.propTypes = {
+  successMsg: PropTypes.string,
+  setSuccessMsg: PropTypes.func,
 }
 
 export default Authentication
