@@ -8,6 +8,7 @@ import {
 import Authentication from './pages/Authentication/Authentication'
 import Layout from './components/Layout'
 import Movies from './pages/Movies'
+import NotFound from './pages/NotFound/NotFound'
 import PrivateRoute from './utils/PrivateRoute'
 import Profile from './pages/Profile'
 import Shows from './pages/Shows'
@@ -51,6 +52,9 @@ function App() {
                 exact
               />
             </Route>
+          </Route>
+          <Route element={<PrivateRoute logoutMsg={setSuccessMsg} />}>
+            <Route element={<NotFound />} path="/*" />
           </Route>
         </Routes>
       </Router>
