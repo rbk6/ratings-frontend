@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
 import {
   Menu,
@@ -11,6 +11,8 @@ import {
   Settings,
   Star,
   Close,
+  Person,
+  Logout,
 } from '@mui/icons-material'
 import slatelistLogo from '../../assets/slatelist-type-dark.png'
 import style from './NavBar.module.css'
@@ -18,11 +20,29 @@ import style from './NavBar.module.css'
 const NavBar = ({ logoutMsg }) => {
   const navigate = useNavigate()
   const [isMenuToggled, setIsMenuToggled] = useState(true)
+  const settingsRef = useRef(null)
+  const [isSettingsToggled, setIsSettingsToggled] = useState(false)
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (settingsRef.current && !settingsRef.current.contains(e.target))
+        setIsSettingsToggled(false)
+      else setIsSettingsToggled(true)
+    }
+
+    document.addEventListener('click', handleOutsideClick)
+    return () => document.removeEventListener('click', handleOutsideClick)
+  }, [])
 
   const handleLogout = () => {
     sessionStorage.removeItem('rate')
     logoutMsg('You have been logged out.')
     navigate('/login')
+  }
+
+  const toggleSettings = (e) => {
+    e.stopPropagation()
+    setIsSettingsToggled(!isSettingsToggled)
   }
 
   const toggleMenu = () => {
@@ -38,7 +58,7 @@ const NavBar = ({ logoutMsg }) => {
         <ul>
           <li className={style.start}>
             <button
-              className={isMenuToggled ? `${style.open}` : ''}
+              className={isMenuToggled ? `${style['menu-open']}` : ''}
               onClick={toggleMenu}
             >
               {isMenuToggled ? <Close /> : <Menu />}
@@ -50,14 +70,16 @@ const NavBar = ({ logoutMsg }) => {
             />
           </li>
           <li className={style.end}>
-            <button onClick={handleLogout}>
+            <button onClick={toggleSettings}>
               <AccountCircle className={style.profile} />
             </button>
           </li>
         </ul>
       </nav>
       <div
-        className={`${style['start-menu']} ${isMenuToggled ? style.open : ''}`}
+        className={`${style['start-menu']} ${
+          isMenuToggled ? `${style['menu-open']}` : ''
+        }`}
       >
         <ul>
           <li>
@@ -65,7 +87,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/search"
             >
               <Search className={style.icon} />
@@ -75,7 +96,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/shows"
             >
               <LiveTv className={style.icon} />
@@ -85,7 +105,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/"
             >
               <Movie className={style.icon} />
@@ -98,7 +117,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/lists"
             >
               <List className={style.icon} />
@@ -108,7 +126,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/ratings"
             >
               <Star className={style.icon} />
@@ -118,7 +135,6 @@ const NavBar = ({ logoutMsg }) => {
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
-              onClick={toggleMenu}
               to="/settings"
             >
               <Settings className={style.icon} />
@@ -164,6 +180,25 @@ const NavBar = ({ logoutMsg }) => {
             &copy; rbk6 — <span>{year}</span>
           </p>
         </div>
+      </div>
+      <div
+        ref={settingsRef}
+        className={`${style['end-menu']} ${
+          isSettingsToggled ? `${style['settings-open']}` : ''
+        }`}
+      >
+        <NavLink className={style.navlink} to="/profile">
+          <Person className={style.icon} />
+          Profile
+        </NavLink>
+        <NavLink className={style.navlink} to="/settings">
+          <Settings className={style.icon} />
+          Settings
+        </NavLink>
+        <NavLink className={style.navlink} onClick={handleLogout} to="/login">
+          <Logout className={style.icon} />
+          Logout
+        </NavLink>
       </div>
     </>
   )
