@@ -19,20 +19,25 @@ import style from './NavBar.module.css'
 
 const NavBar = ({ logoutMsg }) => {
   const navigate = useNavigate()
-  const [isMenuToggled, setIsMenuToggled] = useState(true)
-  const settingsRef = useRef(null)
+  const menuRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [isMenuToggled, setIsMenuToggled] = useState(isMobile ? false : true)
   const [isSettingsToggled, setIsSettingsToggled] = useState(false)
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (settingsRef.current && !settingsRef.current.contains(e.target))
+      if (
+        (isMenuToggled || isSettingsToggled) &&
+        !menuRef.current.contains(e.target)
+      ) {
+        if (isMobile) setIsMenuToggled(false)
         setIsSettingsToggled(false)
-      else setIsSettingsToggled(true)
+      }
     }
 
     document.addEventListener('click', handleOutsideClick)
     return () => document.removeEventListener('click', handleOutsideClick)
-  }, [])
+  }, [isMobile, isMenuToggled, isSettingsToggled])
 
   const handleLogout = () => {
     sessionStorage.removeItem('rate')
@@ -40,17 +45,30 @@ const NavBar = ({ logoutMsg }) => {
     navigate('/login')
   }
 
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768)
+  }
+
   const toggleSettings = (e) => {
     e.stopPropagation()
+    if (isMobile && isMenuToggled) {
+      setIsMenuToggled(!isMenuToggled)
+    }
     setIsSettingsToggled(!isSettingsToggled)
   }
 
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    e.stopPropagation()
+    if (isMobile && isSettingsToggled) {
+      setIsSettingsToggled(!isSettingsToggled)
+    }
     setIsMenuToggled(!isMenuToggled)
   }
 
   const date = new Date()
   const year = date.getFullYear()
+
+  window.addEventListener('resize', handleResize)
 
   return (
     <>
@@ -77,6 +95,7 @@ const NavBar = ({ logoutMsg }) => {
         </ul>
       </nav>
       <div
+        ref={menuRef}
         className={`${style['start-menu']} ${
           isMenuToggled ? `${style['menu-open']}` : ''
         }`}
@@ -182,16 +201,24 @@ const NavBar = ({ logoutMsg }) => {
         </div>
       </div>
       <div
-        ref={settingsRef}
+        ref={menuRef}
         className={`${style['end-menu']} ${
           isSettingsToggled ? `${style['settings-open']}` : ''
         }`}
       >
-        <NavLink className={style.navlink} to="/profile">
+        <NavLink
+          className={style.navlink}
+          onClick={toggleSettings}
+          to="/profile"
+        >
           <Person className={style.icon} />
           Profile
         </NavLink>
-        <NavLink className={style.navlink} to="/settings">
+        <NavLink
+          className={style.navlink}
+          onClick={toggleSettings}
+          to="/settings"
+        >
           <Settings className={style.icon} />
           Settings
         </NavLink>
@@ -200,6 +227,7 @@ const NavBar = ({ logoutMsg }) => {
           Logout
         </NavLink>
       </div>
+      {isMobile && isMenuToggled ? <div className={style.overlay}></div> : null}
     </>
   )
 }
