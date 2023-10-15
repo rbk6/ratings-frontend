@@ -6,7 +6,7 @@ function Layout({ logoutMsg }) {
   return (
     <div style={{ width: '100%' }}>
       <Navbar logoutMsg={logoutMsg} />
-      <div style={{ marginTop: '100px' }}>
+      <div style={{ marginTop: '70px' }}>
         <Outlet />
       </div>
     </div>
