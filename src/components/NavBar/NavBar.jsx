@@ -40,7 +40,7 @@ const NavBar = ({ logoutMsg }) => {
   }, [isMobile, isMenuToggled, isSettingsToggled])
 
   const handleLogout = () => {
-    sessionStorage.removeItem('rate')
+    sessionStorage.clear()
     logoutMsg('You have been logged out.')
     navigate('/login')
   }

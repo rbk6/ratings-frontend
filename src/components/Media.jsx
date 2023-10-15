@@ -7,36 +7,46 @@ import Loading from '../components/Loading'
 
 const Media = ({ logoutMsg, type }) => {
   const apiUrl = import.meta.env.VITE_API_URL
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(type === 'movies' ? 1 : 0)
   const [mediaPreviews, setMediaPreviews] = useState({ data: [] })
   const navigate = useNavigate()
 
   useEffect(() => {
     const handleLogout = () => {
-      sessionStorage.removeItem('rate')
+      sessionStorage.clear()
       logoutMsg('Your session has expired, you have been logged out.')
       navigate('/login')
     }
 
     const getMediaPreviews = async () => {
-      try {
-        const token = sessionStorage.getItem('rate')
-        const headers = { Authorization: `Bearer ${token}` }
-        const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
-        if (res.data.accessToken) {
-          sessionStorage.setItem('rate', res.data.accessToken)
-          const updatedRes = await axios.get(`${apiUrl}/${type}/${page}`, {
-            headers: {
-              Authorization: `Bearer ${res.data.accessToken}`,
-            },
-          })
-          setMediaPreviews(updatedRes.data.data)
-        } else {
-          setMediaPreviews(res.data.data)
+      const storageKey = `current-${type}`
+      if (sessionStorage.getItem(storageKey)) {
+        setMediaPreviews(JSON.parse(sessionStorage.getItem(storageKey)))
+      } else {
+        try {
+          const token = sessionStorage.getItem('rate')
+          const headers = { Authorization: `Bearer ${token}` }
+          const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
+          if (res.data.accessToken) {
+            sessionStorage.setItem('rate', res.data.accessToken)
+            const updatedRes = await axios.get(`${apiUrl}/${type}/${page}`, {
+              headers: {
+                Authorization: `Bearer ${res.data.accessToken}`,
+              },
+            })
+            sessionStorage.setItem(
+              storageKey,
+              JSON.stringify(updatedRes.data.data)
+            )
+            setMediaPreviews(updatedRes.data.data)
+          } else {
+            sessionStorage.setItem(storageKey, JSON.stringify(res.data.data))
+            setMediaPreviews(res.data.data)
+          }
+        } catch (err) {
+          if (err.message.includes('403')) handleLogout()
+          else console.log(`Error fetching ${type}`)
         }
-      } catch (err) {
-        if (err.message.includes('403')) handleLogout()
-        else console.log(`Error fetching ${type}`)
       }
     }
 
