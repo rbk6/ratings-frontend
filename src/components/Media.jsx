@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Preview from '../components/Preview'
+import Preview from '../components/Preview/Preview'
 import Loading from '../components/Loading'
 
 const Media = ({ logoutMsg, type }) => {

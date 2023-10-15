@@ -1,0 +1,124 @@
+.preview-container {
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.preview-container .wrapper {
+  margin: -12px 0 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.preview {
+  margin: 18px;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  transition: transform 300ms ease-in-out;
+}
+
+.preview:hover {
+  transform: scale(1.025);
+}
+
+.preview h3,
+.preview h4 {
+  font-weight: 400;
+}
+
+.preview h3 {
+  width: 275px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.preview h4 {
+  color: #aaa;
+}
+
+.preview svg {
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.6));
+}
+
+.preview .more-info {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.preview .more-info button {
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: rgba(22, 20, 19, 0.75);
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.75));
+}
+
+.preview .more-info button:hover {
+  background-color: var(--primary-color);
+  transition: background-color 200ms ease-in-out;
+}
+
+.more-info-wrapper .info {
+  border-radius: 12px;
+}
+
+.more-info-wrapper p {
+  width: 275px;
+  height: 430px;
+  margin: 10px 0;
+  padding: 10px 10px 20px 10px;
+  text-align: left;
+  overflow-y: auto;
+}
+
+.preview .image {
+  height: 480px;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.preview .info {
+  width: 350px;
+  padding: 14px 0 24px 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--card-bg-color);
+}
+
+.preview .btn-container {
+  width: 100%;
+  margin-top: -12px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-container button {
+  width: 130px;
+  padding: 0.3em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.05em;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  background-color: var(--primary-color);
+}
+
+.btn-container button:hover {
+  background-color: var(--button-bg-hover-color);
+}
