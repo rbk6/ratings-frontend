@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import slatelistTypeDark from '../../assets/slatelist-type-dark.png'
 import AuthForm from '../../components/AuthForm'
+import slatelistTypeDark from '../../assets/slatelist-type-dark.png'
 import style from './Authentication.module.css'
 
 const Message = ({ message, color }) => {
-  return message ? <p style={{ color, marginTop: '24px' }}>{message}</p> : null
+  return message ? <p style={{ color, margin: '8px 0' }}>{message}</p> : null
 }
 
 const Authentication = ({ successMsg, setSuccessMsg }) => {
