@@ -1,9 +1,9 @@
 :root {
   /* dark theme variables */
   --primary-color: #6020dd;
-  --bg-color: #0b0a08;
-  --card-bg-color: #12100e;
-  --input-bg-color: #2b2621;
+  --bg-color: #0a0806;
+  --card-bg-color: #161413;
+  --input-bg-color: #37332f;
   --hyperlink-color: #723cdf;
   --button-bg-hover-color: #43169c;
 
@@ -31,6 +31,7 @@
 
 ::-webkit-scrollbar-track {
   background: var(--bg-color);
+  border-radius: 12px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
