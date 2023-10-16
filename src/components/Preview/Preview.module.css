@@ -11,10 +11,14 @@
 }
 
 .preview {
+  width: 350px;
+  height: 575px;
   margin: 18px;
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
-  background-color: transparent;
+  position: relative;
+  background-color: var(--card-bg-color);
   transition: transform 300ms ease-in-out;
 }
 
@@ -66,43 +70,53 @@
   transition: background-color 200ms ease-in-out;
 }
 
+.preview .more-info-wrapper {
+  height: 600px;
+}
+
 .more-info-wrapper .info {
   border-radius: 12px;
 }
 
 .more-info-wrapper p {
   width: 275px;
-  height: 430px;
+  height: 375px;
   margin: 10px 0;
   padding: 10px 10px 20px 10px;
   text-align: left;
   overflow-y: auto;
 }
 
+.more-info-wrapper h3 {
+  width: 275px;
+  overflow: visible;
+  white-space: wrap;
+  word-wrap: break-word;
+}
+
 .preview .image {
   height: 480px;
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
 .preview .info {
   width: 350px;
   padding: 14px 0 24px 0;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--card-bg-color);
 }
 
 .preview .btn-container {
   width: 100%;
-  margin-top: -12px;
+  bottom: -10px;
+  left: 0;
   display: flex;
   justify-content: space-around;
+  position: absolute;
 }
 
 .btn-container button {
@@ -121,4 +135,46 @@
 
 .btn-container button:hover {
   background-color: var(--button-bg-hover-color);
+}
+
+@media (max-width: 767px) {
+  .preview-container {
+    max-width: 100%;
+    margin-top: 90px;
+  }
+
+  .preview {
+    width: 175px;
+    height: 325px;
+    margin: 12px;
+  }
+  .preview .image {
+    height: 250px;
+  }
+
+  .preview h3 {
+    width: 150px;
+  }
+
+  .preview h4 {
+    font-size: 0.9em;
+  }
+
+  .preview .info {
+    width: 175px;
+  }
+
+  .more-info-wrapper .info {
+    width: 350px;
+  }
+
+  .btn-container button {
+    width: 90px;
+    padding: 0.2em 0.6em;
+    font-size: 0.7em;
+  }
+
+  .btn-container svg {
+    font-size: 1.75em;
+  }
 }

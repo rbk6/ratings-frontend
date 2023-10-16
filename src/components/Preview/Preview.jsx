@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import style from './Preview.module.css'
-import RatingModal from '../RatingModal'
 import { Add, InfoOutlined, Star } from '@mui/icons-material'
+import PreviewInfoModal from '../PreviewInfoModal/PreviewInfoModal'
+import RatingModal from '../RatingModal'
+import style from './Preview.module.css'
 
-const Preview = ({ previews, type }) => {
+const Preview = ({ previews, type, isMobile }) => {
   const [selectedPreview, setSelectedPreview] = useState(null)
   const [moreInfo, setMoreInfo] = useState(null)
   const [ratingIsOpen, setRatingIsOpen] = useState(false)
@@ -14,9 +15,12 @@ const Preview = ({ previews, type }) => {
     setSelectedPreview(preview)
   }
 
-  const toggleInfo = (id) => {
-    if (moreInfo === id) setMoreInfo(null)
-    else setMoreInfo(id)
+  const toggleInfo = (preview) => {
+    if (moreInfo === preview.id) setMoreInfo(null)
+    else {
+      setMoreInfo(preview.id)
+      setSelectedPreview(preview)
+    }
   }
 
   const formatDate = (date) => {
@@ -27,6 +31,10 @@ const Preview = ({ previews, type }) => {
     return `${month}/${day}/${year}`
   }
 
+  const uniquePreviews = Array.from(
+    new Set(previews.map((preview) => preview.id))
+  ).map((id) => previews.find((preview) => preview.id === id))
+
   return (
     <div className={`${style['preview-container']}`}>
       {ratingIsOpen ? (
@@ -36,12 +44,18 @@ const Preview = ({ previews, type }) => {
           type={type}
         />
       ) : null}
+      {moreInfo && isMobile ? (
+        <PreviewInfoModal
+          preview={selectedPreview}
+          close={() => setMoreInfo(null)}
+        />
+      ) : null}
       <div className={style.wrapper}>
-        {previews.map((preview) => {
-          const formattedDate = formatDate(preview.releaseDate)
-          let endDate = formatDate(preview.endDate)
+        {uniquePreviews.map((preview) => {
+          preview.releaseDate = formatDate(preview.releaseDate)
+          preview.endDate = formatDate(preview.endDate)
 
-          let description = new DOMParser().parseFromString(
+          preview.description = new DOMParser().parseFromString(
             preview.description.replace(/<\/p><p>/g, ' '),
             'text/html'
           ).body.textContent
@@ -49,11 +63,11 @@ const Preview = ({ previews, type }) => {
           return (
             <div className={style.preview} key={preview.id} id={preview.id}>
               <div className={`${style['more-info']}`}>
-                <button onClick={() => toggleInfo(preview.id)}>
+                <button onClick={() => toggleInfo(preview)}>
                   <InfoOutlined />
                 </button>
               </div>
-              {moreInfo !== preview.id ? (
+              {moreInfo !== preview.id || isMobile ? (
                 <>
                   <div
                     className={style.image}
@@ -65,39 +79,44 @@ const Preview = ({ previews, type }) => {
                     <h3>{preview.title}</h3>
                     {preview.status ? (
                       preview.status === 'Ended' ? (
-                        <h4>{`${formattedDate} - ${endDate}`}</h4>
+                        <h4>{`${preview.releaseDate} - ${preview.endDate}`}</h4>
                       ) : (
-                        <h4>{formattedDate} - Present</h4>
+                        <h4>{preview.releaseDate} - Present</h4>
                       )
                     ) : (
-                      <h4>{`Released ${formattedDate}`}</h4>
+                      <h4>{`Released ${preview.releaseDate}`}</h4>
                     )}
                   </div>
                 </>
               ) : (
-                <div className={`${style['more-info-wrapper']}`}>
-                  <div className={style.info}>
-                    <h3>{preview.title}</h3>
-                    {preview.status ? (
-                      preview.status === 'Ended' ? (
-                        <h4>{`${formattedDate} - ${endDate}`}</h4>
+                <>
+                  <div className={`${style['more-info-wrapper']}`}>
+                    <div className={style.info}>
+                      <h3>{preview.title}</h3>
+                      {preview.status ? (
+                        preview.status === 'Ended' ? (
+                          <h4>{`${preview.releaseDate} - ${preview.endDate}`}</h4>
+                        ) : (
+                          <h4>{preview.releaseDate} - Present</h4>
+                        )
                       ) : (
-                        <h4>{formattedDate} - Present</h4>
-                      )
-                    ) : (
-                      <h4>{`Released ${formattedDate}`}</h4>
-                    )}
-                    <p>{description}</p>
+                        <h4>{`Released ${preview.releaseDate}`}</h4>
+                      )}
+                      <p>{preview.description}</p>
+                    </div>
                   </div>
-                </div>
+                </>
               )}
               <div className={`${style['btn-container']}`}>
                 <button>
                   <Add /> Add to List
                 </button>
-                <button onClick={() => openRating(preview)}>
+                <button
+                  style={isMobile ? { width: '60px' } : {}}
+                  onClick={() => openRating(preview)}
+                >
                   <Star />
-                  Rate This
+                  {isMobile ? 'Rate' : 'Rate This'}
                 </button>
               </div>
             </div>
@@ -111,6 +130,7 @@ const Preview = ({ previews, type }) => {
 Preview.propTypes = {
   previews: PropTypes.array,
   type: PropTypes.string,
+  isMobile: PropTypes.bool,
 }
 
 export default Preview
