@@ -17,10 +17,9 @@ import {
 import slatelistLogo from '../../assets/slatelist-type-dark.png'
 import style from './NavBar.module.css'
 
-const NavBar = ({ logoutMsg }) => {
+const NavBar = ({ logoutMsg, isMobile }) => {
   const navigate = useNavigate()
   const menuRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const [isMenuToggled, setIsMenuToggled] = useState(isMobile ? false : true)
   const [isSettingsToggled, setIsSettingsToggled] = useState(false)
 
@@ -45,10 +44,6 @@ const NavBar = ({ logoutMsg }) => {
     navigate('/login')
   }
 
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768)
-  }
-
   const toggleSettings = (e) => {
     e.stopPropagation()
     if (isMobile && isMenuToggled) {
@@ -67,8 +62,6 @@ const NavBar = ({ logoutMsg }) => {
 
   const date = new Date()
   const year = date.getFullYear()
-
-  window.addEventListener('resize', handleResize)
 
   return (
     <>
@@ -234,6 +227,7 @@ const NavBar = ({ logoutMsg }) => {
 
 NavBar.propTypes = {
   logoutMsg: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 export default NavBar

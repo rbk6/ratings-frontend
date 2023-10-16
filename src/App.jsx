@@ -16,6 +16,10 @@ import './App.css'
 
 function App() {
   const [successMsg, setSuccessMsg] = useState('')
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+
+  const handleResize = () => setIsMobile(window.innerWidth <= 768)
+  window.addEventListener('resize', handleResize)
 
   return (
     <div className="App">
@@ -34,20 +38,28 @@ function App() {
             }
             path="/login"
           />
-          <Route element={<Layout logoutMsg={setSuccessMsg} />}>
+          <Route
+            element={<Layout logoutMsg={setSuccessMsg} isMobile={isMobile} />}
+          >
             <Route element={<PrivateRoute logoutMsg={setSuccessMsg} />}>
               <Route
-                element={<Movies logoutMsg={setSuccessMsg} />}
+                element={
+                  <Movies logoutMsg={setSuccessMsg} isMobile={isMobile} />
+                }
                 path="/"
                 exact
               />
               <Route
-                element={<Shows logoutMsg={setSuccessMsg} />}
+                element={
+                  <Shows logoutMsg={setSuccessMsg} isMobile={isMobile} />
+                }
                 path="/shows"
                 exact
               />
               <Route
-                element={<Profile logoutMsg={setSuccessMsg} />}
+                element={
+                  <Profile logoutMsg={setSuccessMsg} isMobile={isMobile} />
+                }
                 path="/profile"
                 exact
               />

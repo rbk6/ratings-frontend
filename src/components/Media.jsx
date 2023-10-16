@@ -5,7 +5,7 @@ import axios from 'axios'
 import Preview from '../components/Preview/Preview'
 import Loading from '../components/Loading'
 
-const Media = ({ logoutMsg, type }) => {
+const Media = ({ logoutMsg, type, isMobile }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [page, setPage] = useState(type === 'movies' ? 1 : 0)
   const [mediaPreviews, setMediaPreviews] = useState({ data: [] })
@@ -56,7 +56,7 @@ const Media = ({ logoutMsg, type }) => {
   return (
     <>
       {mediaPreviews.length > 0 ? (
-        <Preview previews={mediaPreviews} type={type} />
+        <Preview previews={mediaPreviews} type={type} isMobile={isMobile} />
       ) : (
         <Loading />
       )}
@@ -67,6 +67,7 @@ const Media = ({ logoutMsg, type }) => {
 Media.propTypes = {
   logoutMsg: PropTypes.func,
   type: PropTypes.string,
+  isMobile: PropTypes.bool,
 }
 
 export default Media

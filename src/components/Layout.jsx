@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import Navbar from '../components/NavBar/NavBar'
 import { Outlet } from 'react-router-dom'
+import Navbar from '../components/NavBar/NavBar'
 
-function Layout({ logoutMsg }) {
+function Layout({ logoutMsg, isMobile }) {
   return (
     <div style={{ width: '100%' }}>
-      <Navbar logoutMsg={logoutMsg} />
+      <Navbar logoutMsg={logoutMsg} isMobile={isMobile} />
       <div style={{ marginTop: '70px' }}>
         <Outlet />
       </div>
@@ -15,6 +15,7 @@ function Layout({ logoutMsg }) {
 
 Layout.propTypes = {
   logoutMsg: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 export default Layout
