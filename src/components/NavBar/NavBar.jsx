@@ -35,7 +35,11 @@ const NavBar = ({ logoutMsg, isMobile }) => {
     }
 
     document.addEventListener('click', handleOutsideClick)
-    return () => document.removeEventListener('click', handleOutsideClick)
+    document.addEventListener('scroll', handleOutsideClick)
+    return () => {
+      document.removeEventListener('click', handleOutsideClick)
+      document.removeEventListener('scroll', handleOutsideClick)
+    }
   }, [isMobile, isMenuToggled, isSettingsToggled])
 
   const handleLogout = () => {
@@ -217,7 +221,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
         </NavLink>
         <NavLink className={style.navlink} onClick={handleLogout} to="/login">
           <Logout className={style.icon} />
-          Logout
+          Log out
         </NavLink>
       </div>
       {isMobile && isMenuToggled ? <div className={style.overlay}></div> : null}
