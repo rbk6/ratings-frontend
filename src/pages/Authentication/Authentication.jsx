@@ -8,7 +8,7 @@ const Message = ({ message, color }) => {
   return message ? <p style={{ color, margin: '8px 0' }}>{message}</p> : null
 }
 
-const Authentication = ({ successMsg, setSuccessMsg }) => {
+const Authentication = ({ successMsg, setSuccessMsg, isMobile }) => {
   const [errorMsg, setErrorMsg] = useState('')
   const [currentForm, setCurrentForm] = useState('login')
 
@@ -62,6 +62,7 @@ const Authentication = ({ successMsg, setSuccessMsg }) => {
               setErrorMsg={setErrorMsg}
               setSuccessMsg={setSuccessMsg}
               setCurrentForm={setCurrentForm}
+              isMobile={isMobile}
             />
             <Message message={successMsg} color="#2ff46a" />
             <Message message={errorMsg} color="#f42f2f" />
@@ -86,6 +87,7 @@ Message.propTypes = {
 Authentication.propTypes = {
   successMsg: PropTypes.string,
   setSuccessMsg: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 export default Authentication

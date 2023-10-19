@@ -63,7 +63,10 @@ const Preview = ({ previews, type, isMobile }) => {
           return (
             <div className={style.preview} key={preview.id} id={preview.id}>
               <div className={`${style['more-info']}`}>
-                <button onClick={() => toggleInfo(preview)}>
+                <button
+                  title={`About ${preview.title}`}
+                  onClick={() => toggleInfo(preview)}
+                >
                   <InfoOutlined />
                 </button>
               </div>
@@ -108,10 +111,11 @@ const Preview = ({ previews, type, isMobile }) => {
                 </>
               )}
               <div className={`${style['btn-container']}`}>
-                <button>
+                <button title={`Add ${preview.title} to List`}>
                   <Add /> Add to List
                 </button>
                 <button
+                  title={`Rate ${preview.title}`}
                   style={isMobile ? { width: '60px' } : {}}
                   onClick={() => openRating(preview)}
                 >

@@ -5,7 +5,13 @@ import axios from 'axios'
 import isEmail from 'email-validator'
 import style from '../pages/Authentication/Authentication.module.css'
 
-const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
+const AuthForm = ({
+  fields,
+  setErrorMsg,
+  setSuccessMsg,
+  setCurrentForm,
+  isMobile,
+}) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const navigate = useNavigate()
   const [form, setForm] = useState(
@@ -104,7 +110,7 @@ const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
               }
               value={form[field.name]}
               onChange={onFieldUpdate}
-              autoFocus={isFirst}
+              autoFocus={isMobile ? false : isFirst}
               type={field.type}
               name={field.name}
               id={field.name}
@@ -134,6 +140,7 @@ AuthForm.propTypes = {
   setErrorMsg: PropTypes.func,
   setSuccessMsg: PropTypes.func,
   setCurrentForm: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 export default AuthForm

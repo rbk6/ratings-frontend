@@ -100,6 +100,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
         <ul>
           <li>
             <NavLink
+              aria-label="Search"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -109,6 +110,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
               Search
             </NavLink>
             <NavLink
+              aria-label="Shows"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -118,6 +120,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
               Shows
             </NavLink>
             <NavLink
+              aria-label="Movies"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -130,6 +133,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
           <hr />
           <li>
             <NavLink
+              aria-label="Lists"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -139,6 +143,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
               Lists
             </NavLink>
             <NavLink
+              aria-label="Ratings"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -148,6 +153,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
               Ratings
             </NavLink>
             <NavLink
+              aria-label="Settings"
               className={({ isActive }) =>
                 isActive ? `${style.navlink} ${style.current}` : style.navlink
               }
@@ -204,6 +210,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
         }`}
       >
         <NavLink
+          aria-label="Profile"
           className={style.navlink}
           onClick={toggleSettings}
           to="/profile"
@@ -212,6 +219,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
           Profile
         </NavLink>
         <NavLink
+          aria-label="Settings"
           className={style.navlink}
           onClick={toggleSettings}
           to="/settings"
@@ -219,7 +227,12 @@ const NavBar = ({ logoutMsg, isMobile }) => {
           <Settings className={style.icon} />
           Settings
         </NavLink>
-        <NavLink className={style.navlink} onClick={handleLogout} to="/login">
+        <NavLink
+          aria-label="Log out"
+          className={style.navlink}
+          onClick={handleLogout}
+          to="/login"
+        >
           <Logout className={style.icon} />
           Log out
         </NavLink>
