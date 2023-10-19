@@ -13,34 +13,34 @@ const Media = ({ logoutMsg, type, isMobile }) => {
 
   useEffect(() => {
     const handleLogout = () => {
-      sessionStorage.clear()
+      localStorage.clear()
       logoutMsg('Your session has expired, you have been logged out.')
       navigate('/login')
     }
 
     const getMediaPreviews = async () => {
       const storageKey = `current-${type}`
-      if (sessionStorage.getItem(storageKey)) {
-        setMediaPreviews(JSON.parse(sessionStorage.getItem(storageKey)))
+      if (localStorage.getItem(storageKey)) {
+        setMediaPreviews(JSON.parse(localStorage.getItem(storageKey)))
       } else {
         try {
-          const token = sessionStorage.getItem('rate')
+          const token = localStorage.getItem('rate')
           const headers = { Authorization: `Bearer ${token}` }
           const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
           if (res.data.accessToken) {
-            sessionStorage.setItem('rate', res.data.accessToken)
+            localStorage.setItem('rate', res.data.accessToken)
             const updatedRes = await axios.get(`${apiUrl}/${type}/${page}`, {
               headers: {
                 Authorization: `Bearer ${res.data.accessToken}`,
               },
             })
-            sessionStorage.setItem(
+            localStorage.setItem(
               storageKey,
               JSON.stringify(updatedRes.data.data)
             )
             setMediaPreviews(updatedRes.data.data)
           } else {
-            sessionStorage.setItem(storageKey, JSON.stringify(res.data.data))
+            localStorage.setItem(storageKey, JSON.stringify(res.data.data))
             setMediaPreviews(res.data.data)
           }
         } catch (err) {

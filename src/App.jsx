@@ -15,6 +15,7 @@ import Shows from './pages/Shows'
 import './App.css'
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem('rate')
   const [successMsg, setSuccessMsg] = useState('')
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
@@ -27,12 +28,13 @@ function App() {
         <Routes>
           <Route
             element={
-              sessionStorage.getItem('rate') ? (
+              isAuthenticated ? (
                 <Navigate to="/" />
               ) : (
                 <Authentication
                   setSuccessMsg={setSuccessMsg}
                   successMsg={successMsg}
+                  isMobile={isMobile}
                 />
               )
             }
@@ -66,7 +68,7 @@ function App() {
             </Route>
           </Route>
           <Route element={<PrivateRoute logoutMsg={setSuccessMsg} />}>
-            <Route element={<NotFound />} path="/*" />
+            <Route element={<NotFound />} path="*" />
           </Route>
         </Routes>
       </Router>

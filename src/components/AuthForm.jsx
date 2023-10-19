@@ -71,7 +71,7 @@ const AuthForm = ({ fields, setErrorMsg, setSuccessMsg, setCurrentForm }) => {
           username,
           password,
         })
-        sessionStorage.setItem('rate', res.data.accessToken)
+        localStorage.setItem('rate', res.data.accessToken)
         navigate('/')
       } catch (err) {
         if (err.response && err.response.data && err.response.data.msg)

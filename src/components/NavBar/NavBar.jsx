@@ -43,7 +43,7 @@ const NavBar = ({ logoutMsg, isMobile }) => {
   }, [isMobile, isMenuToggled, isSettingsToggled])
 
   const handleLogout = () => {
-    sessionStorage.clear()
+    localStorage.clear()
     logoutMsg('You have been logged out.')
     navigate('/login')
   }

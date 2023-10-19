@@ -38,14 +38,14 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
     try {
       const res = await axios.post(`${apiUrl}/ratings`, updatedForm, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('rate')}`,
+          Authorization: `Bearer ${localStorage.getItem('rate')}`,
         },
       })
 
       if (res.data.accessToken) {
         console.log('updating token')
         const updatedToken = res.data.accessToken
-        sessionStorage.setItem('rate', updatedToken)
+        localStorage.setItem('rate', updatedToken)
         const updatedRes = await axios.post(`${apiUrl}/ratings`, updatedForm, {
           headers: {
             Authorization: `Bearer ${updatedToken}`,
