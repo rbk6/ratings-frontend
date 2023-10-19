@@ -32,6 +32,7 @@
 .auth-container button {
   width: 525px;
   cursor: pointer;
+  color: #fff;
   background-color: var(--primary-color);
 }
 

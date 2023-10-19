@@ -112,7 +112,8 @@ const Preview = ({ previews, type, isMobile }) => {
               )}
               <div className={`${style['btn-container']}`}>
                 <button title={`Add ${preview.title} to List`}>
-                  <Add /> Add to List
+                  <Add />
+                  {isMobile ? 'Add to' : 'Add to List'}
                 </button>
                 <button
                   title={`Rate ${preview.title}`}
