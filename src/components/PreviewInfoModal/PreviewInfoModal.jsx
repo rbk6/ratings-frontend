@@ -8,14 +8,17 @@ const PreviewInfoModal = ({ preview, close }) => {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
-    return () => (document.body.style.overflow = 'auto')
-  }, [])
+    const handleOutsideClick = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) close(null)
+    }
 
-  const handleOutsideClick = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) close(null)
-  }
+    document.addEventListener('mousedown', handleOutsideClick)
 
-  document.addEventListener('mousedown', handleOutsideClick)
+    return () => {
+      document.body.style.overflow = 'auto'
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [close, modalRef])
 
   return (
     <>
