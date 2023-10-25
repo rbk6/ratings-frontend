@@ -1,0 +1,11 @@
+.star-rating::before {
+  content: '⭐⭐⭐⭐⭐';
+}
+
+.star-rating {
+  display: inline-block;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+}
