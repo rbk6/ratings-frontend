@@ -11,6 +11,7 @@ import Movies from './pages/Movies'
 import NotFound from './pages/NotFound/NotFound'
 import PrivateRoute from './utils/PrivateRoute'
 import Profile from './pages/Profile'
+import Ratings from './pages/Ratings'
 import Shows from './pages/Shows'
 import './App.css'
 
@@ -56,6 +57,13 @@ function App() {
                   <Shows logoutMsg={setSuccessMsg} isMobile={isMobile} />
                 }
                 path="/shows"
+                exact
+              />
+              <Route
+                element={
+                  <Ratings logoutMsg={setSuccessMsg} isMobile={isMobile} />
+                }
+                path="/ratings"
                 exact
               />
               <Route

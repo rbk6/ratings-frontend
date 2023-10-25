@@ -9,6 +9,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
     title: preview.title,
     user_rating: '5',
     content: '',
+    image: '',
     movie_id: null,
     show_id: null,
   })
@@ -31,7 +32,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    let updatedForm = { ...form }
+    let updatedForm = { ...form, image: preview.image }
     if (type === 'movie') updatedForm = { ...updatedForm, movie_id: preview.id }
     else updatedForm = { ...updatedForm, show_id: preview.id }
     setForm(updatedForm)
@@ -43,21 +44,21 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
       })
 
       if (res.data.accessToken) {
-        console.log('updating token')
         const updatedToken = res.data.accessToken
         localStorage.setItem('rate', updatedToken)
-        const updatedRes = await axios.post(`${apiUrl}/ratings`, updatedForm, {
+        await axios.post(`${apiUrl}/ratings`, updatedForm, {
           headers: {
             Authorization: `Bearer ${updatedToken}`,
           },
         })
-        console.log(updatedRes)
-      } else {
-        console.log(res)
       }
-      if (res.status === 201) setSuccessMsg('Rating created.')
+      if (res.status === 201) {
+        setErrorMsg('')
+        setSuccessMsg('Rating created.')
+      }
     } catch (err) {
-      setErrorMsg(err.response.data.msg || err.response.data || err)
+      if (!err) setErrorMsg('There was an error creating this rating')
+      else setErrorMsg(err.response.data.msg || err.response.data || err)
     }
   }
 
@@ -108,6 +109,7 @@ const RatingModal = ({ preview, setRatingIsOpen, type }) => {
                 name="content"
                 placeholder="Share your thoughts..."
                 autoComplete="on"
+                maxLength="500"
                 style={{ resize: 'none' }}
               />
             </div>
