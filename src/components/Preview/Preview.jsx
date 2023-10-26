@@ -79,7 +79,7 @@ const Preview = ({ previews, type, isMobile }) => {
                     }}
                   ></div>
                   <div className={style.info}>
-                    <h3>{preview.title}</h3>
+                    <h3 title={preview.title}>{preview.title}</h3>
                     {preview.status ? (
                       preview.status === 'Ended' ? (
                         <h4>{`${preview.releaseDate} - ${preview.endDate}`}</h4>
