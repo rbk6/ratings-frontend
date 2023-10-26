@@ -54,7 +54,7 @@ const Ratings = ({ logoutMsg, isMobile }) => {
   return (
     <>
       {ratings.length > 0 && !isZero ? (
-        <Rating ratings={ratings} isMobile={isMobile} />
+        <Rating ratings={ratings} setRatings={setRatings} isMobile={isMobile} />
       ) : isZero ? (
         <div
           style={{
