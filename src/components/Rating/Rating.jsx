@@ -33,7 +33,7 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
     const decoded = jwtDecode(token)
     try {
       await axios.delete(
-        `${apiUrl}/ratings/${decoded.id}/${rating.rating_id}`,
+        `${apiUrl}/ratings/${decoded.id}/${rating.content_id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('rate')}`,
@@ -41,7 +41,7 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
         }
       )
       setRatings((prevRatings) =>
-        prevRatings.filter((rate) => rate.rating_id !== rating.rating_id)
+        prevRatings.filter((rate) => rate.content_id !== rating.content_id)
       )
       handleCancel()
       console.log('deletion successful')
@@ -78,8 +78,8 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
           return (
             <div
               className={style.rating}
-              key={rating.rating_id}
-              id={rating.rating_id}
+              key={rating.content_id}
+              id={rating.content_id}
             >
               <div className={style.delete}>
                 <button
@@ -101,7 +101,11 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
               </div>
               <div className={style.info}>
                 <h3 title={rating.title}>{rating.title}</h3>
-                <span>{formatDate(rating.created_at)}</span>
+                <span>
+                  {rating.updated_at
+                    ? `Last edited ${formatDate(rating.updated_at)}`
+                    : `${formatDate(rating.created_at)}`}
+                </span>
                 <RatingBar rating={parseFloat(rating.user_rating)} />
               </div>
             </div>
