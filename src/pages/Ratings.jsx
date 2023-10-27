@@ -9,7 +9,7 @@ import Rating from '../components/Rating/Rating'
 const Ratings = ({ logoutMsg, isMobile }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [ratings, setRatings] = useState({ data: [] })
-  const [isZero, setIsZero] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,13 +37,15 @@ const Ratings = ({ logoutMsg, isMobile }) => {
               },
             }
           )
+          setLoading(false)
           setRatings(updatedRes.data.data)
         } else {
+          setLoading(false)
           setRatings(res.data.data)
         }
       } catch (err) {
         if (err.message.includes('403')) handleLogout()
-        else if (err.message.includes('404')) setIsZero(true)
+        else if (err.message.includes('404')) setLoading(false)
         else console.log('Error fetching ratings')
       }
     }
@@ -53,9 +55,11 @@ const Ratings = ({ logoutMsg, isMobile }) => {
 
   return (
     <>
-      {ratings.length > 0 && !isZero ? (
+      {loading ? (
+        <Loading />
+      ) : ratings.length > 0 ? (
         <Rating ratings={ratings} setRatings={setRatings} isMobile={isMobile} />
-      ) : isZero ? (
+      ) : (
         <div
           style={{
             height: '70vh',
@@ -66,11 +70,9 @@ const Ratings = ({ logoutMsg, isMobile }) => {
           }}
         >
           <h2>
-            No ratings yet <a href="/search">get started</a>
+            No ratings yet? <a href="/search">Get started!</a>
           </h2>
         </div>
-      ) : (
-        <Loading />
       )}
     </>
   )
