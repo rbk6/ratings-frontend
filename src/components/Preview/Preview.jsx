@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { Add, InfoOutlined, Star } from '@mui/icons-material'
 import PreviewInfoModal from '../PreviewInfoModal/PreviewInfoModal'
-import RatingModal from '../RatingModal'
+import CreateModal from '../CreateModal/CreateModal'
 import style from './Preview.module.css'
 
 const Preview = ({ previews, type, isMobile }) => {
@@ -38,7 +38,8 @@ const Preview = ({ previews, type, isMobile }) => {
   return (
     <div className={`${style['preview-container']}`}>
       {ratingIsOpen ? (
-        <RatingModal
+        <CreateModal
+          title={'Create Rating'}
           preview={selectedPreview}
           setRatingIsOpen={setRatingIsOpen}
           type={type}
