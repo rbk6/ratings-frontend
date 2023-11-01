@@ -25,6 +25,7 @@ const Media = ({ logoutMsg, type, isMobile }) => {
       } else {
         try {
           const token = localStorage.getItem('rate')
+          if (token.exp < Date.now() / 1000) handleLogout()
           const headers = { Authorization: `Bearer ${token}` }
           const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
           if (res.data.accessToken) {
