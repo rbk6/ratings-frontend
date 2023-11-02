@@ -65,6 +65,7 @@
 
 .create-form label {
   align-self: flex-start;
+  text-align: left;
   font-size: 20px !important;
   margin-bottom: 0.25em;
 }
@@ -163,4 +164,50 @@
   backdrop-filter: blur(3px);
   background-color: rgba(0, 0, 0, 0.75);
   transition: backdrop-filter 400ms ease-in-out;
+}
+
+@media (max-width: 767px) {
+  .modal-wrapper {
+    width: 90%;
+    left: 5%;
+    top: 12.5%;
+    z-index: 5;
+  }
+
+  .modal-wrapper .create-modal {
+    height: 500px;
+  }
+
+  .create-modal .create-form {
+    width: 75%;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .create-modal h2 {
+    font-size: 24px;
+    margin-top: 0.75em;
+  }
+
+  .create-form label {
+    font-size: 18px !important;
+  }
+
+  .create-form input,
+  .create-form textarea {
+    width: 95%;
+  }
+
+  .create-form textarea {
+    height: 125px;
+  }
+
+  .create-form button[type='submit'] {
+    width: 50%;
+    padding: 0.5em;
+    align-self: flex-end;
+    margin: auto 0 1em 0;
+    background-color: var(--primary-color);
+  }
 }

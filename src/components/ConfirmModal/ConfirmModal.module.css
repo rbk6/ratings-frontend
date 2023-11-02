@@ -111,3 +111,10 @@
   background-color: rgba(0, 0, 0, 0.75);
   transition: backdrop-filter 400ms ease-in-out;
 }
+
+@media (max-width: 767px) {
+  .modal-wrapper {
+    width: 90%;
+    top: 25%;
+  }
+}
