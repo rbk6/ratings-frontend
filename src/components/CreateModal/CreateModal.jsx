@@ -6,14 +6,21 @@ import jwtDecode from 'jwt-decode'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import style from './CreateModal.module.css'
 
-const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
+const CreateModal = ({
+  title,
+  preview,
+  rating,
+  edit,
+  setRatingIsOpen,
+  type,
+}) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [form, setForm] = useState({
-    title: preview.title,
-    user_rating: '5',
-    content: '',
-    image: '',
-    content_id: `${type[0]}${preview.id}`,
+    title: !rating ? preview.title : rating.title,
+    user_rating: !rating ? 5 : rating.user_rating,
+    content: !rating ? '' : rating.content,
+    image: !rating ? '' : rating.image,
+    content_id: type ? `${type[0]}${preview.id}` : rating.content_id,
   })
 
   const modalRef = useRef(null)
@@ -28,9 +35,10 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
 
   const onFieldUpdate = (e) => {
     const { name, value } = e.target
+    const trimEnd = name === 'content' ? value.trimEnd() : value
     setForm((prevForm) => ({
       ...prevForm,
-      [name]: value,
+      [name]: trimEnd,
     }))
   }
 
@@ -123,12 +131,15 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
             </button>
           </div>
           <h2>{title}</h2>
-          <form className={`${style['create-form']}`} onSubmit={handleSubmit}>
+          <form
+            className={`${style['create-form']}`}
+            onSubmit={(e) => (!rating ? handleSubmit(e) : edit(e, form))}
+          >
             <div>
               <label htmlFor="title">Title:</label>
               <input
-                title={preview.title}
-                value={preview.title}
+                title={!rating ? preview.title : rating.title}
+                value={!rating ? preview.title : rating.title}
                 onChange={onFieldUpdate}
                 type="text"
                 id="title"
@@ -146,6 +157,7 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
                 )}%`}
                 className={style.slider}
                 onChange={onFieldUpdate}
+                defaultValue={!rating ? 5 : rating.user_rating}
                 type="range"
                 max="5.0"
                 min="0.0"
@@ -161,6 +173,7 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
               <label htmlFor="content">Description:</label>
               <textarea
                 onChange={onFieldUpdate}
+                defaultValue={!rating ? '' : rating.content}
                 type="text"
                 id="content"
                 name="content"
@@ -182,9 +195,7 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
                 }}
               >{`${errorMsg}`}</p>
             ) : null}
-            <button type="submit" onSubmit={handleSubmit}>
-              Create
-            </button>
+            <button type="submit">{!rating ? 'Create' : 'Edit'}</button>
           </form>
         </div>
       </div>
@@ -196,6 +207,8 @@ const CreateModal = ({ title, preview, setRatingIsOpen, type }) => {
 CreateModal.propTypes = {
   title: PropTypes.string,
   preview: PropTypes.object,
+  rating: PropTypes.object,
+  edit: PropTypes.func,
   setRatingIsOpen: PropTypes.func,
   type: PropTypes.string,
 }

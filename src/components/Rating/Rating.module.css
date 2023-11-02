@@ -11,14 +11,13 @@
 }
 
 .rating {
-  width: 350px;
-  height: 575px;
+  width: 300px;
+  height: 500px;
   margin: 18px;
   border-radius: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   background-color: var(--card-bg-color);
   transition: transform 300ms ease-in-out;
 }
@@ -29,7 +28,11 @@
 
 .rating .image {
   width: 100%;
-  height: 480px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   background-size: cover;
   background-position: center;
   border-top-left-radius: 24px;
@@ -37,25 +40,32 @@
 }
 
 .image .content {
-  width: 300px;
-  height: 480px;
-  padding: 0 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-  color: transparent;
-  background-color: rgba(0, 0, 0, 0);
-  border-top-left-radius: 22px;
-  border-top-right-radius: 22px;
-  overflow-y: auto;
-  transition: 0.3s;
+  width: 80%;
+  margin: auto 0px 1em 0;
+  padding: 1em;
+  border-radius: 12px;
+  color: #fff;
+  background-color: var(--card-bg-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 }
 
-.image .content:hover {
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
-  background-color: rgba(0, 0, 0, 0.8);
+.image .content h4,
+.image .content pre {
+  text-align: left;
+  word-break: break-word;
+  overflow-y: auto;
+}
+
+.image .content h4 {
+  font-size: 18px;
+  color: var(--hyperlink-color);
+}
+
+.image .content pre {
+  max-height: 150px;
+  white-space: pre-wrap;
+  color: #ccc;
 }
 
 .rating .info {
@@ -83,27 +93,47 @@
   color: #aaa;
 }
 
-.rating .delete {
+.rating .btn-group {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.rating .delete button {
+.btn-group svg {
+  font-size: 28px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.btn-group .delete,
+.btn-group .edit {
   margin: 12px;
   padding: 4px;
   border: none;
-  border-radius: 100%;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   color: #fff;
-  background-color: rgba(22, 20, 19, 0.75);
+  background-color: #790606;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.75));
 }
 
-.rating .delete button:hover {
-  background-color: #790606;
+.btn-group .edit {
+  margin: 12px 56px;
+  background-color: var(--primary-color);
+}
+
+.btn-group .edit:hover,
+.btn-group .delete:hover {
+  cursor: pointer;
   transition: background-color 200ms ease-in-out;
+}
+
+.btn-group .edit:hover {
+  background-color: var(--button-bg-hover-color);
+}
+
+.btn-group .delete:hover {
+  background-color: #570505;
 }
