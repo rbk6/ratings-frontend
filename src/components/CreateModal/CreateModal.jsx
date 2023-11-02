@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Close } from '@mui/icons-material'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
@@ -28,9 +28,16 @@ const CreateModal = ({
   const [isOverwriteOpen, setIsOverwriteOpen] = useState(false)
   const [overwriteMsg, setOverwriteMsg] = useState(false)
 
+  useEffect(() => {
+    const overflow = window.getComputedStyle(document.body).overflow
+    document.body.style.overflow = 'hidden'
+    return () => (document.body.style.overflow = overflow)
+  }, [])
+
   const closeRating = useCallback(() => {
     setForm({ title: '', content: '' })
     setRatingIsOpen(false)
+    setOverwriteMsg('')
   }, [setRatingIsOpen])
 
   const onFieldUpdate = (e) => {
@@ -63,15 +70,16 @@ const CreateModal = ({
     }
   }
 
-  const handleCancel = () => {
-    setIsOverwriteOpen(false)
-    setOverwriteMsg('')
-  }
+  const handleCancel = () => setIsOverwriteOpen(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (form.content.length > 500) {
       setErrorMsg('Description cannot exceed 500 characters.')
+      return
+    }
+    if (overwriteMsg) {
+      setIsOverwriteOpen(true)
       return
     }
     let updatedForm = { ...form, image: preview.image }
