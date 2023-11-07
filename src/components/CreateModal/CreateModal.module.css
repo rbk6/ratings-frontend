@@ -180,7 +180,7 @@
 
   .create-modal .create-form {
     width: 75%;
-    height: 550px;
+    height: 450px;
     display: flex;
     flex-direction: column;
   }
@@ -204,6 +204,7 @@
   }
 
   .create-form button[type='submit'] {
+    font-weight: 400;
     width: 50%;
     padding: 0.5em;
     align-self: flex-end;
