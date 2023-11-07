@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
 import Preview from '../components/Preview/Preview'
 import Loading from '../components/Loading'
 
@@ -19,13 +20,14 @@ const Media = ({ logoutMsg, type, isMobile }) => {
     }
 
     const getMediaPreviews = async () => {
+      const token = localStorage.getItem('rate')
+      const decoded = jwtDecode(token)
+      if (decoded.exp < Date.now() / 1000) handleLogout()
       const storageKey = `current-${type}`
       if (localStorage.getItem(storageKey)) {
         setMediaPreviews(JSON.parse(localStorage.getItem(storageKey)))
       } else {
         try {
-          const token = localStorage.getItem('rate')
-          if (token.exp < Date.now() / 1000) handleLogout()
           const headers = { Authorization: `Bearer ${token}` }
           const res = await axios.get(`${apiUrl}/${type}/${page}`, { headers })
           if (res.data.accessToken) {
