@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import { useState } from 'react'
-import { Delete, Edit } from '@mui/icons-material'
+import { Delete, Edit, InfoOutlined } from '@mui/icons-material'
 import CreateModal from '../CreateModal/CreateModal'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import RatingBar from '../RatingBar/RatingBar'
@@ -14,6 +14,7 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [deleteMsg, setDeleteMsg] = useState(false)
   const [rating, setRating] = useState(null)
+  const [selectedRating, setSelectedRating] = useState([])
 
   const formatDate = (date) => {
     const formattedDate = new Date(
@@ -86,6 +87,14 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
     }
   }
 
+  const toggleRating = (curr) => {
+    if (selectedRating.some((rate) => rate.title === curr.title))
+      setSelectedRating(
+        selectedRating.filter((rate) => rate.title !== curr.title)
+      )
+    else setSelectedRating([...selectedRating, curr])
+  }
+
   const handleCancel = () => {
     setIsDeleteOpen(false)
     setIsEditOpen(false)
@@ -137,41 +146,62 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
               key={rating.content_id}
               id={rating.content_id}
             >
-              <div className={`${style['btn-group']}`}>
+              {rating.content ? (
+                <div className={`${style['more-info']}`}>
+                  <button
+                    title={'View Rating Description'}
+                    onClick={() => toggleRating(rating)}
+                  >
+                    <InfoOutlined />
+                  </button>
+                </div>
+              ) : null}
+              <>
+                <div
+                  className={style.image}
+                  style={{
+                    backgroundImage: `url(${rating.image})`,
+                  }}
+                >
+                  <div className={style.content}>
+                    <div className={style.group}>
+                      <RatingBar rating={parseFloat(rating.user_rating)} />
+                      {selectedRating.some(
+                        (rate) => rate.title === rating.title
+                      ) && (
+                        <>
+                          <h4>Description:</h4>
+                          <pre>{rating.content}</pre>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className={style.info}>
+                  <h3 title={rating.title}>{rating.title}</h3>
+                  {rating.updated_at ? (
+                    <span>Last edited {formatDate(rating.updated_at)}</span>
+                  ) : (
+                    <span>{formatDate(rating.created_at)}</span>
+                  )}
+                </div>
+              </>
+              <div className={`${style['btn-container']}`}>
                 <button
                   title={`Edit ${rating.title} Rating`}
                   className={style.edit}
+                  style={isMobile ? { width: '60px' } : {}}
                   onClick={() => setEdit(rating)}
                 >
-                  <Edit />
+                  <Edit /> Edit
                 </button>
                 <button
                   title={`Delete ${rating.title} Rating`}
                   className={style.delete}
                   onClick={() => setConfirmDeletion(rating)}
                 >
-                  <Delete />
+                  <Delete /> Delete
                 </button>
-              </div>
-              <div
-                className={style.image}
-                style={{
-                  backgroundImage: `url(${rating.image})`,
-                }}
-              >
-                <div className={rating.content.length > 0 ? style.content : ''}>
-                  <h4>{rating.content.length > 0 ? 'Description:' : ''}</h4>
-                  <pre>{rating.content}</pre>
-                </div>
-              </div>
-              <div className={style.info}>
-                <h3 title={rating.title}>{rating.title}</h3>
-                <span>
-                  {rating.updated_at
-                    ? `Last edited ${formatDate(rating.updated_at)}`
-                    : formatDate(rating.created_at)}
-                </span>
-                <RatingBar rating={parseFloat(rating.user_rating)} />
               </div>
             </div>
           )

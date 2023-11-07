@@ -10,7 +10,7 @@ const RatingBar = ({ rating }) => {
       title={`${percentage.toFixed(0)}% Rating`}
       className={style['rating-bar-container']}
     >
-      <div className={style['rating-text']}>{displayRating}/5 Stars</div>
+      <div className={style['rating-text']}>{displayRating}/5</div>
       <div
         className={style['rating-bar']}
         style={{ width: `${percentage}%` }}
