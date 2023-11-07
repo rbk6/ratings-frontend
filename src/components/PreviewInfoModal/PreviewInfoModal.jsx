@@ -1,29 +1,19 @@
 import PropTypes from 'prop-types'
-import { useEffect, useRef } from 'react'
 import { Close, Add, Star } from '@mui/icons-material'
+import { useEffect } from 'react'
 import style from './PreviewInfoModal.module.css'
 
-const PreviewInfoModal = ({ preview, close }) => {
-  const modalRef = useRef(null)
-
+const PreviewInfoModal = ({ preview, openRating, close }) => {
   useEffect(() => {
+    const overflow = window.getComputedStyle(document.body).overflow
     document.body.style.overflow = 'hidden'
-    const handleOutsideClick = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) close(null)
-    }
-
-    document.addEventListener('mousedown', handleOutsideClick)
-
-    return () => {
-      document.body.style.overflow = 'auto'
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-  }, [close, modalRef])
+    return () => (document.body.style.overflow = overflow)
+  }, [])
 
   return (
     <>
       <div className={`${style['modal-wrapper']}`}>
-        <div ref={modalRef} className={`${style['info-modal']}`}>
+        <div className={`${style['info-modal']}`}>
           <div className={`${style['info-btn']}`}>
             <button className={style.close} onClick={() => close(null)}>
               <Close className="close-icon" />
@@ -44,7 +34,12 @@ const PreviewInfoModal = ({ preview, close }) => {
             <button>
               <Add /> Add to List
             </button>
-            <button>
+            <button
+              onClick={() => {
+                openRating(preview)
+                close(null)
+              }}
+            >
               <Star />
               Rate This
             </button>
@@ -58,6 +53,7 @@ const PreviewInfoModal = ({ preview, close }) => {
 
 PreviewInfoModal.propTypes = {
   preview: PropTypes.object,
+  openRating: PropTypes.func,
   close: PropTypes.func,
 }
 

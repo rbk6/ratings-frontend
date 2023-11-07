@@ -38,17 +38,18 @@
   background-color: transparent;
 }
 
-.info-modal h3,
-.info-modal h4 {
-  font-weight: 400;
-}
-
 .info-modal h3 {
+  font-weight: 400;
   width: 275px;
   margin-top: 24px;
   align-self: center;
   word-wrap: break-word;
   color: #fff;
+}
+
+.info-modal h4 {
+  font-weight: 300;
+  color: #bbb;
 }
 
 .info-modal p {

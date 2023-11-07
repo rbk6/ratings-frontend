@@ -27,7 +27,7 @@
 }
 
 .preview h3,
-.preview h4 {
+.preview span {
   font-weight: 400;
 }
 
@@ -39,12 +39,12 @@
   color: #fff;
 }
 
-.preview h4 {
+.preview span {
   color: #aaa;
 }
 
 .preview svg {
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
 .preview .more-info {
@@ -147,23 +147,33 @@
 
   .preview {
     width: 160px;
-    height: 325px;
+    height: 310px;
     margin: 12px;
+    border-radius: 12px;
   }
+
+  .preview:hover {
+    transform: scale(1);
+  }
+
   .preview .image {
     height: 250px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 
   .preview h3 {
     width: 145px;
+    font-size: 0.85em;
   }
 
-  .preview h4 {
-    font-size: 0.9em;
+  .preview span {
+    font-size: 0.75em;
   }
 
   .preview .info {
     width: 160px;
+    padding: 8px 0 16px 0;
   }
 
   .more-info-wrapper .info {

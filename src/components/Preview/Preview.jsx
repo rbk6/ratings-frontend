@@ -48,6 +48,7 @@ const Preview = ({ previews, type, isMobile }) => {
       {moreInfo && isMobile ? (
         <PreviewInfoModal
           preview={selectedPreview}
+          openRating={openRating}
           close={() => setMoreInfo(null)}
         />
       ) : null}
@@ -83,12 +84,12 @@ const Preview = ({ previews, type, isMobile }) => {
                     <h3 title={preview.title}>{preview.title}</h3>
                     {preview.status ? (
                       preview.status === 'Ended' ? (
-                        <h4>{`${preview.releaseDate} - ${preview.endDate}`}</h4>
+                        <span>{`${preview.releaseDate} - ${preview.endDate}`}</span>
                       ) : (
-                        <h4>{preview.releaseDate} - Present</h4>
+                        <span>{preview.releaseDate} - Present</span>
                       )
                     ) : (
-                      <h4>{`Released ${preview.releaseDate}`}</h4>
+                      <span>{`Released ${preview.releaseDate}`}</span>
                     )}
                   </div>
                 </>
@@ -99,12 +100,12 @@ const Preview = ({ previews, type, isMobile }) => {
                       <h3>{preview.title}</h3>
                       {preview.status ? (
                         preview.status === 'Ended' ? (
-                          <h4>{`${preview.releaseDate} - ${preview.endDate}`}</h4>
+                          <span>{`${preview.releaseDate} - ${preview.endDate}`}</span>
                         ) : (
-                          <h4>{preview.releaseDate} - Present</h4>
+                          <span>{preview.releaseDate} - Present</span>
                         )
                       ) : (
-                        <h4>{`Released ${preview.releaseDate}`}</h4>
+                        <span>{`Released ${preview.releaseDate}`}</span>
                       )}
                       <p>{preview.description}</p>
                     </div>
