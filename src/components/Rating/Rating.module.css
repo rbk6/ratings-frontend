@@ -39,6 +39,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
+  cursor: pointer;
   color: #fff;
   background-color: rgba(22, 20, 19, 0.75);
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.75));
@@ -68,36 +69,33 @@
 
 .rating .content {
   width: 90%;
-  border-radius: 12px;
   margin-bottom: 0.5em;
-  background-color: var(--card-bg-color);
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 .content .group {
-  width: 100%;
+  width: 52.5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: 0.5em 0;
+  background-color: var(--card-bg-color);
+  transition: 500ms ease-in-out;
+  border-radius: 12px;
+}
+
+.content .selected {
+  width: 100%;
 }
 
 .group h4 {
-  width: 100%;
-  margin-left: 12px;
+  width: 90%;
   text-align: left;
   font-size: 18px;
   color: var(--hyperlink-color);
-}
-
-.group pre {
-  margin-left: 12px;
-  margin-bottom: 12px;
-  width: 90%;
-  max-height: 200px;
-  overflow-y: auto;
-  text-wrap: wrap;
-  text-align: left;
 }
 
 .rating .info {
@@ -106,14 +104,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.rating h3 {
-  width: 275px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #fff;
 }
 
 .rating h3,
@@ -131,7 +121,7 @@
   left: 0;
   display: flex;
   justify-content: space-around;
-  position: relative;
+  position: absolute;
 }
 
 .btn-container button {
@@ -161,6 +151,27 @@
   background-color: #570505;
 }
 
+@media (min-width: 768px) {
+  .group pre {
+    margin-bottom: 12px;
+    width: 90%;
+    max-height: 150px;
+    overflow-y: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-wrap: wrap;
+    text-align: left;
+  }
+
+  .rating h3 {
+    width: 275px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #fff;
+  }
+}
+
 @media (max-width: 767px) {
   .rating-container {
     max-width: 100%;
@@ -172,12 +183,6 @@
     height: 310px;
     margin: 12px;
     border-radius: 12px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--card-bg-color);
-    transition: transform 300ms ease-in-out;
   }
 
   .rating:hover {
@@ -185,16 +190,21 @@
   }
 
   .rating .image {
-    width: 100%;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    background-size: cover;
-    background-position: center;
+    max-height: 250px;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+  }
+
+  .rating .content {
+    width: 95%;
+  }
+
+  .content .group {
+    width: 65%;
+  }
+
+  .content .selected {
+    width: 100%;
   }
 
   .group h4 {
@@ -202,12 +212,23 @@
   }
 
   .group pre {
+    overflow: auto;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    min-width: 130px;
+    margin-bottom: 12px;
+    text-align: left;
     font-size: 0.6em;
-    max-height: 100px;
+    max-height: 75px;
+  }
+
+  .rating .info {
+    width: 100%;
+    padding: 12px 0 32px 0;
   }
 
   .rating h3 {
-    width: 145px;
+    width: 97.5%;
     font-size: 0.85em;
   }
 
@@ -223,10 +244,6 @@
   .rating span {
     color: #aaa;
     font-size: 0.75em;
-  }
-
-  .rating .btn-container {
-    width: 100%;
   }
 
   .btn-container button {

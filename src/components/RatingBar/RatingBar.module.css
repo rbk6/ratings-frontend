@@ -1,7 +1,6 @@
 .rating-bar-container {
-  align-self: center;
-  width: 50%;
-  margin: 0.25em 0;
+  width: 125px;
+  margin: 0.5em 0;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   background-color: #3b3b3b;
   border-radius: 6px;
@@ -34,6 +33,10 @@
 }
 
 @media (max-width: 767px) {
+  .rating-bar-container {
+    width: 80px;
+  }
+
   .rating-bar {
     height: 18px;
   }

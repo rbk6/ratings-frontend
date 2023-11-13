@@ -103,9 +103,10 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
 
   const setEdit = (rating) => {
     setIsEditOpen(true)
-    const user_rating = Number.isInteger(rating.user_rating)
-      ? rating.user_rating
-      : Math.round(rating.user_rating)
+    const user_rating =
+      parseFloat(rating.user_rating) % 1 !== 0
+        ? rating.user_rating
+        : Math.round(rating.user_rating)
     setRating({
       ...rating,
       user_rating: user_rating,
@@ -164,7 +165,19 @@ const Rating = ({ ratings, setRatings, isMobile }) => {
                   }}
                 >
                   <div className={style.content}>
-                    <div className={style.group}>
+                    <div
+                      className={
+                        selectedRating.some(
+                          (rate) => rate.title === rating.title
+                        )
+                          ? `${style.group} ${style.selected}`
+                          : style.group
+                      }
+                      onClick={
+                        rating.content ? () => toggleRating(rating) : null
+                      }
+                      style={rating.content ? { cursor: 'pointer' } : {}}
+                    >
                       <RatingBar rating={parseFloat(rating.user_rating)} />
                       {selectedRating.some(
                         (rate) => rate.title === rating.title
