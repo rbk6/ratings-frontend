@@ -4,15 +4,26 @@ import { Add, InfoOutlined, Star } from '@mui/icons-material'
 import PreviewInfoModal from '../PreviewInfoModal/PreviewInfoModal'
 import CreateModal from '../CreateModal/CreateModal'
 import style from './Preview.module.css'
+import AddToList from '../AddToList/AddToList'
 
-const Preview = ({ previews, type, isMobile }) => {
+const Preview = ({ previews, lists, type, isMobile }) => {
   const [selectedPreview, setSelectedPreview] = useState(null)
   const [moreInfo, setMoreInfo] = useState(null)
   const [ratingIsOpen, setRatingIsOpen] = useState(false)
+  const [addToListIsOpen, setAddToListIsOpen] = useState(false)
 
   const openRating = (preview) => {
     setRatingIsOpen(true)
     setSelectedPreview(preview)
+  }
+
+  const openAddToList = (preview) => {
+    if (addToListIsOpen && selectedPreview.title === preview.title)
+      setAddToListIsOpen(false)
+    else {
+      setAddToListIsOpen(true)
+      setSelectedPreview(preview)
+    }
   }
 
   const toggleInfo = (preview) => {
@@ -113,7 +124,20 @@ const Preview = ({ previews, type, isMobile }) => {
                 </>
               )}
               <div className={`${style['btn-container']}`}>
-                <button title={`Add ${preview.title} to List`}>
+                {addToListIsOpen &&
+                selectedPreview &&
+                selectedPreview === preview ? (
+                  <AddToList
+                    preview={selectedPreview}
+                    lists={lists}
+                    isOpen={addToListIsOpen}
+                    onClose={() => setAddToListIsOpen(false)}
+                  />
+                ) : null}
+                <button
+                  title={`Add ${preview.title} to List`}
+                  onClick={() => openAddToList(preview)}
+                >
                   <Add />
                   {isMobile ? 'Add to' : 'Add to List'}
                 </button>
@@ -136,6 +160,7 @@ const Preview = ({ previews, type, isMobile }) => {
 
 Preview.propTypes = {
   previews: PropTypes.array,
+  lists: PropTypes.array,
   type: PropTypes.string,
   isMobile: PropTypes.bool,
 }
