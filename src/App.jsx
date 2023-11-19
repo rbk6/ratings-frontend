@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import Authentication from './pages/Authentication/Authentication'
 import Layout from './components/Layout'
+import Lists from './pages/Lists'
 import Movies from './pages/Movies'
 import NotFound from './pages/NotFound/NotFound'
 import PrivateRoute from './utils/PrivateRoute'
@@ -59,6 +60,13 @@ function App() {
                 path="/shows"
                 exact
               />
+              <Route
+                element={
+                  <Lists logoutMsg={setSuccessMsg} isMobile={isMobile} />
+                }
+                path="/lists"
+              />
+              <Route element={<Lists />} path="/lists/:list_name" />
               <Route
                 element={
                   <Ratings logoutMsg={setSuccessMsg} isMobile={isMobile} />
