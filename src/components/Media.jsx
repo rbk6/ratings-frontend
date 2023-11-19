@@ -10,6 +10,7 @@ const Media = ({ logoutMsg, type, isMobile }) => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [page, setPage] = useState(type === 'movies' ? 1 : 0)
   const [mediaPreviews, setMediaPreviews] = useState({ data: [] })
+  const [lists, setLists] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -53,13 +54,54 @@ const Media = ({ logoutMsg, type, isMobile }) => {
       }
     }
 
+    const getListItems = async () => {
+      const token = localStorage.getItem('rate')
+      const decoded = jwtDecode(token)
+      if (decoded.exp < Date.now() / 1000) handleLogout()
+      try {
+        const headers = { Authorization: `Bearer ${token}` }
+        const res = await axios.get(`${apiUrl}/listItems/${decoded.id}`, {
+          headers,
+        })
+        if (res.data.accessToken) {
+          localStorage.setItem('rate', res.data.accessToken)
+          const updatedRes = await axios.get(
+            `${apiUrl}/listItems/${decoded.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${res.data.accessToken}`,
+              },
+            }
+          )
+          const listNames = updatedRes.data.data.map(({ list_name }) => ({
+            list_name: list_name,
+          }))
+          setLists(listNames)
+        } else {
+          const listNames = res.data.data.map(({ list_name }) => ({
+            list_name: list_name,
+          }))
+          setLists(listNames)
+        }
+      } catch (err) {
+        if (err.message.includes('403')) handleLogout()
+        else console.log('Error fetching lists')
+      }
+    }
+
     getMediaPreviews()
+    getListItems()
   }, [apiUrl, logoutMsg, navigate, page, type])
 
   return (
     <>
       {mediaPreviews.length > 0 ? (
-        <Preview previews={mediaPreviews} type={type} isMobile={isMobile} />
+        <Preview
+          previews={mediaPreviews}
+          lists={lists}
+          type={type}
+          isMobile={isMobile}
+        />
       ) : (
         <Loading />
       )}
