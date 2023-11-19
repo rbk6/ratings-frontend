@@ -1,0 +1,28 @@
+.list-item-container {
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.list-item-container .wrapper {
+  margin: -12px 0 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+}
+
+.list li {
+  margin: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.list img {
+  width: 250px;
+}
